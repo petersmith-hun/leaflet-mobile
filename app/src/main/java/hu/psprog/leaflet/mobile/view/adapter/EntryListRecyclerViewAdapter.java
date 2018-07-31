@@ -7,17 +7,18 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import hu.psprog.leaflet.mobile.R;
+import hu.psprog.leaflet.mobile.model.EntrySummary;
 import hu.psprog.leaflet.mobile.view.fragment.EntryListFragment.OnEntryItemSelectedListener;
-import hu.psprog.leaflet.mobile.view.fragment.dummy.DummyContent.DummyItem;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.List;
 
 public class EntryListRecyclerViewAdapter extends RecyclerView.Adapter<EntryListRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> entryList;
+    private final List<EntrySummary> entryList;
     private final OnEntryItemSelectedListener entryItemSelectedListener;
 
-    public EntryListRecyclerViewAdapter(List<DummyItem> items, OnEntryItemSelectedListener listener) {
+    public EntryListRecyclerViewAdapter(List<EntrySummary> items, OnEntryItemSelectedListener listener) {
         entryList = items;
         entryItemSelectedListener = listener;
     }
@@ -33,8 +34,8 @@ public class EntryListRecyclerViewAdapter extends RecyclerView.Adapter<EntryList
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.entryItem = entryList.get(position);
-        holder.mIdView.setText(entryList.get(position).id);
-        holder.mContentView.setText(entryList.get(position).content);
+        holder.titleTextView.setText(entryList.get(position).getTitle());
+        holder.prologueTextView.setText(entryList.get(position).getPrologue());
 
         holder.mView.setOnClickListener(view -> {
             if (null != entryItemSelectedListener) {
@@ -49,21 +50,24 @@ public class EntryListRecyclerViewAdapter extends RecyclerView.Adapter<EntryList
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
-        public DummyItem entryItem;
+        final View mView;
+        final TextView titleTextView;
+        final TextView prologueTextView;
+        EntrySummary entryItem;
 
-        public ViewHolder(View view) {
+        ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = view.findViewById(R.id.item_number);
-            mContentView = view.findViewById(R.id.content);
+            titleTextView = view.findViewById(R.id.entryTitle);
+            prologueTextView = view.findViewById(R.id.entryPrologue);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            return new ToStringBuilder(this)
+                    .append("titleTextView", titleTextView.getText())
+                    .append("prologueTextView", prologueTextView.getText())
+                    .toString();
         }
     }
 }

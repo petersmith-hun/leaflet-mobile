@@ -1,13 +1,9 @@
 package hu.psprog.leaflet.mobile.view.activity;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -18,9 +14,9 @@ import android.view.MenuItem;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import hu.psprog.leaflet.mobile.R;
+import hu.psprog.leaflet.mobile.model.EntrySummary;
 import hu.psprog.leaflet.mobile.view.fragment.EntryDetailsFragment;
 import hu.psprog.leaflet.mobile.view.fragment.EntryListFragment;
-import hu.psprog.leaflet.mobile.view.fragment.dummy.DummyContent;
 
 import java.util.Objects;
 
@@ -89,8 +85,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public void onListFragmentInteraction(DummyContent.DummyItem item) {
-        changeFragment(EntryDetailsFragment.newInstance(item.id));
+    public void onListFragmentInteraction(EntrySummary item) {
+        changeFragment(EntryDetailsFragment.newInstance(item.getLink()));
     }
 
     private ActionBarDrawerToggle getToggle() {
