@@ -1,14 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.RecyclerView
+<RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/list"
-        android:name="hu.psprog.leaflet.mobile.view.fragment.EntryListFragment"
-        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        app:layoutManager="LinearLayoutManager"
-        tools:context=".view.fragment.EntryListFragment"
-        tools:listitem="@layout/fragment_entry"/>
+        android:layout_width="match_parent">
+
+    <android.support.v7.widget.RecyclerView
+            android:id="@+id/entryList"
+            android:name="hu.psprog.leaflet.mobile.view.fragment.EntryListFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            app:layoutManager="LinearLayoutManager"
+            tools:context=".view.fragment.EntryListFragment"
+            tools:listitem="@layout/fragment_entry">
+    </android.support.v7.widget.RecyclerView>
+
+    <ProgressBar
+            style="?android:attr/progressBarStyle"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/entryListProgressBar"
+            android:visibility="gone" />
+
+</RelativeLayout>

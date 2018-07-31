@@ -19,8 +19,9 @@ public class DummyEntryRepositoryImpl implements EntryRepository {
 
     private ObservableFactory observableFactory;
 
-    public DummyEntryRepositoryImpl(ObservableFactory observableFactory) {
-        this.observableFactory = observableFactory;
+    public DummyEntryRepositoryImpl() {
+        // TODO configure Dagger DI
+        this.observableFactory = new ObservableFactory();
     }
 
     @Override
@@ -30,16 +31,19 @@ public class DummyEntryRepositoryImpl implements EntryRepository {
 
     @Override
     public Observable<EntrySummaryPage> getPageOfEntries(int page) {
-        return observableFactory.create(() -> EntrySummaryPage.getBuilder()
-                .withPage(1)
-                .withEntrySummaryList(DummyContent.ITEMS.stream()
-                        .map(dummyItem -> EntrySummary.getBuilder()
-                                .withLink(dummyItem.id)
-                                .withTitle(dummyItem.details)
-                                .withPrologue(dummyItem.content)
-                                .build())
-                        .collect(Collectors.toList()))
-                .build());
+        return observableFactory.create(() -> {
+            Thread.sleep(2000); // simulating long network call
+            return EntrySummaryPage.getBuilder()
+                    .withPage(1)
+                    .withEntrySummaryList(DummyContent.ITEMS.stream()
+                            .map(dummyItem -> EntrySummary.getBuilder()
+                                    .withLink(dummyItem.id)
+                                    .withTitle(dummyItem.content)
+                                    .withPrologue(dummyItem.details)
+                                    .build())
+                            .collect(Collectors.toList()))
+                    .build();
+        });
     }
 
     @Override

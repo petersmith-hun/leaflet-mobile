@@ -15,12 +15,15 @@ import java.util.List;
 
 public class EntryListRecyclerViewAdapter extends RecyclerView.Adapter<EntryListRecyclerViewAdapter.ViewHolder> {
 
-    private final List<EntrySummary> entryList;
-    private final OnEntryItemSelectedListener entryItemSelectedListener;
+    private List<EntrySummary> entryList;
+    private OnEntryItemSelectedListener entryItemSelectedListener;
 
-    public EntryListRecyclerViewAdapter(List<EntrySummary> items, OnEntryItemSelectedListener listener) {
-        entryList = items;
-        entryItemSelectedListener = listener;
+    public void setEntryItemSelectedListener(OnEntryItemSelectedListener entryItemSelectedListener) {
+        this.entryItemSelectedListener = entryItemSelectedListener;
+    }
+
+    public void setEntryList(List<EntrySummary> entryList) {
+        this.entryList = entryList;
     }
 
     @Override
