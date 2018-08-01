@@ -20,7 +20,9 @@ public class DummyEntryRepositoryImpl implements EntryRepository {
     private static final int ITEM_COUNT_PER_PAGE = 10;
     private static final String PROLOGUE = "Lorem ipsum dolor sit amet";
     private static final String LINK_PATTERN = "item-%s";
-    private static final String TITLE_PATTERN = "Title #%s";
+    private static final String DEFAULT_TITLE_PATTERN = "[Default] Title #%s";
+    private static final String CATEGORY_TITLE_PATTERN = "[Category] Title #%s";
+    private static final String CATEGORY_PROLOGUE_PATTERN = "From category=%s";
 
     private ObservableFactory observableFactory;
 
@@ -45,7 +47,7 @@ public class DummyEntryRepositoryImpl implements EntryRepository {
                             .map(index -> calculateID(index, page))
                             .mapToObj(index -> EntrySummary.getBuilder()
                                     .withLink(String.format(LINK_PATTERN, index))
-                                    .withTitle(String.format(TITLE_PATTERN, index))
+                                    .withTitle(String.format(DEFAULT_TITLE_PATTERN, index))
                                     .withPrologue(PROLOGUE)
                                     .build())
                             .collect(Collectors.toList()))
@@ -55,7 +57,21 @@ public class DummyEntryRepositoryImpl implements EntryRepository {
 
     @Override
     public Observable<EntrySummaryPage> getPageOfEntriesByCategory(int page, Category category) {
-        return null;
+        return observableFactory.create(() -> {
+            Thread.sleep(2000); // simulating long network call
+            return EntrySummaryPage.getBuilder()
+                    .withPage(page)
+                    .withHasNext(page < 3)
+                    .withEntrySummaryList(IntStream.range(0, ITEM_COUNT_PER_PAGE)
+                            .map(index -> calculateID(index, page))
+                            .mapToObj(index -> EntrySummary.getBuilder()
+                                    .withLink(String.format(LINK_PATTERN, index))
+                                    .withTitle(String.format(CATEGORY_TITLE_PATTERN, index))
+                                    .withPrologue(String.format(CATEGORY_PROLOGUE_PATTERN, category.toString()))
+                                    .build())
+                            .collect(Collectors.toList()))
+                    .build();
+        });
     }
 
     private int calculateID(int index, int page) {
