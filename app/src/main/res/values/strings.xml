@@ -12,4 +12,5 @@
     <string name="menu_item_home">Home</string>
     <string name="menu_group_categories">Categories</string>
     <string name="menu_item_introduction">Introduction</string>
+    <string name="entrySummaryPageLoadFailure">Failed to load entries</string>
 </resources>
