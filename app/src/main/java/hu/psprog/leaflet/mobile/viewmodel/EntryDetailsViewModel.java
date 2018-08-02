@@ -3,6 +3,7 @@ package hu.psprog.leaflet.mobile.viewmodel;
 import android.arch.lifecycle.ViewModel;
 import hu.psprog.leaflet.mobile.model.EntryDetails;
 import hu.psprog.leaflet.mobile.repository.EntryRepository;
+import hu.psprog.leaflet.mobile.repository.impl.DummyEntryRepositoryImpl;
 import io.reactivex.Observable;
 
 /**
@@ -12,18 +13,14 @@ import io.reactivex.Observable;
  */
 public class EntryDetailsViewModel extends ViewModel {
 
-    private Observable<EntryDetails> entryDetails;
     private EntryRepository entryRepository;
 
-    public EntryDetailsViewModel(EntryRepository entryRepository) {
-        this.entryRepository = entryRepository;
+    public EntryDetailsViewModel() {
+        // TODO configure Dagger DI
+        this.entryRepository = new DummyEntryRepositoryImpl();
     }
 
-    public void init(String link) {
-        entryDetails = entryRepository.getEntry(link);
-    }
-
-    public Observable<EntryDetails> getEntryDetails() {
-        return entryDetails;
+    public Observable<EntryDetails> getEntryDetails(String link) {
+        return entryRepository.getEntry(link);
     }
 }

@@ -23,6 +23,10 @@ public class DummyEntryRepositoryImpl implements EntryRepository {
     private static final String DEFAULT_TITLE_PATTERN = "[Default] Title #%s";
     private static final String CATEGORY_TITLE_PATTERN = "[Category] Title #%s";
     private static final String CATEGORY_PROLOGUE_PATTERN = "From category=%s";
+    private static final String AUTHOR = "petersmith";
+    private static final String CONTENT = "<p style=\"font-style: italic;\">Test entry</p>";
+    private static final String CREATED_DATE = "2018. August 2.";
+    private static final String TITLE = "Test entry";
 
     private ObservableFactory observableFactory;
 
@@ -33,13 +37,21 @@ public class DummyEntryRepositoryImpl implements EntryRepository {
 
     @Override
     public Observable<EntryDetails> getEntry(String link) {
-        return null;
+        return observableFactory.create(() -> {
+            Thread.sleep(1000); // simulating long network call
+            return EntryDetails.getBuilder()
+                    .withAuthor(AUTHOR)
+                    .withContent(CONTENT)
+                    .withCreatedDate(CREATED_DATE)
+                    .withTitle(TITLE)
+                    .build();
+        });
     }
 
     @Override
     public Observable<EntrySummaryPage> getPageOfEntries(int page) {
         return observableFactory.create(() -> {
-            Thread.sleep(2000); // simulating long network call
+            Thread.sleep(1000); // simulating long network call
             return EntrySummaryPage.getBuilder()
                     .withPage(page)
                     .withHasNext(page < 5)
@@ -58,7 +70,7 @@ public class DummyEntryRepositoryImpl implements EntryRepository {
     @Override
     public Observable<EntrySummaryPage> getPageOfEntriesByCategory(int page, Category category) {
         return observableFactory.create(() -> {
-            Thread.sleep(2000); // simulating long network call
+            Thread.sleep(1000); // simulating long network call
             return EntrySummaryPage.getBuilder()
                     .withPage(page)
                     .withHasNext(page < 3)

@@ -6,12 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import hu.psprog.leaflet.mobile.R;
+import hu.psprog.leaflet.mobile.view.loader.impl.EntryDetailsPageContentLoader;
+
+import static hu.psprog.leaflet.mobile.view.loader.impl.EntryDetailsPageContentLoader.ARG_ENTRY_LINK;
 
 public class EntryDetailsFragment extends Fragment {
-
-    private static final String ARG_ENTRY_LINK = "entry_link";
-
-    private String entryLink;
 
     public static EntryDetailsFragment newInstance(String entryLink) {
 
@@ -26,13 +25,14 @@ public class EntryDetailsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            entryLink = getArguments().getString(ARG_ENTRY_LINK);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_entry_details, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_entry_details, container, false);
+        new EntryDetailsPageContentLoader(this, view).loadContent();
+
+        return view;
     }
 }

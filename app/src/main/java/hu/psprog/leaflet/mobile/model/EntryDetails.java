@@ -4,15 +4,19 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import java.io.Serializable;
+
 /**
  * Entry details model object.
  *
  * @author Peter Smith
  */
-public class EntryDetails {
+public class EntryDetails implements Serializable {
 
     private String title;
     private String content;
+    private String author;
+    private String createdDate;
 
     public String getTitle() {
         return title;
@@ -20,6 +24,14 @@ public class EntryDetails {
 
     public String getContent() {
         return content;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public String getCreatedDate() {
+        return createdDate;
     }
 
     @Override
@@ -33,6 +45,8 @@ public class EntryDetails {
         return new EqualsBuilder()
                 .append(title, that.title)
                 .append(content, that.content)
+                .append(author, that.author)
+                .append(createdDate, that.createdDate)
                 .isEquals();
     }
 
@@ -41,6 +55,8 @@ public class EntryDetails {
         return new HashCodeBuilder(17, 37)
                 .append(title)
                 .append(content)
+                .append(author)
+                .append(createdDate)
                 .toHashCode();
     }
 
@@ -49,6 +65,8 @@ public class EntryDetails {
         return new ToStringBuilder(this)
                 .append("title", title)
                 .append("content", content)
+                .append("author", author)
+                .append("createdDate", createdDate)
                 .toString();
     }
 
@@ -62,6 +80,8 @@ public class EntryDetails {
     public static final class EntryDetailsBuilder {
         private String title;
         private String content;
+        private String author;
+        private String createdDate;
 
         private EntryDetailsBuilder() {
         }
@@ -76,9 +96,21 @@ public class EntryDetails {
             return this;
         }
 
+        public EntryDetailsBuilder withAuthor(String author) {
+            this.author = author;
+            return this;
+        }
+
+        public EntryDetailsBuilder withCreatedDate(String createdDate) {
+            this.createdDate = createdDate;
+            return this;
+        }
+
         public EntryDetails build() {
             EntryDetails entryDetails = new EntryDetails();
             entryDetails.title = this.title;
+            entryDetails.author = this.author;
+            entryDetails.createdDate = this.createdDate;
             entryDetails.content = this.content;
             return entryDetails;
         }

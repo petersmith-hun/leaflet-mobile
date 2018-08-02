@@ -13,4 +13,9 @@
     <string name="menu_group_categories">Categories</string>
     <string name="menu_item_introduction">Introduction</string>
     <string name="entrySummaryPageLoadFailure">Failed to load entries</string>
+    <string name="entryFailedToLoad">Failed to load entry</string>
+
+    <string name="detailsPageCSSTag">
+        <![CDATA[<link rel=\"stylesheet\" type=\"text/css\" href=\"css/details_page.css\" /><link rel=\"stylesheet\" type=\"text/css\" href=\"css/calmdown.min.css\" />]]></string>
+    <string name="exceptionMessageLinkNotSpecified">Entry link not specified</string>
 </resources>
