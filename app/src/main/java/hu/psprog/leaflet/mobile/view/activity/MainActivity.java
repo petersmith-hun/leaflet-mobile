@@ -1,7 +1,5 @@
 package hu.psprog.leaflet.mobile.view.activity;
 
-import android.arch.lifecycle.ViewModelProviders;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -16,22 +14,14 @@ import android.view.MenuItem;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import hu.psprog.leaflet.mobile.R;
-import hu.psprog.leaflet.mobile.model.Category;
 import hu.psprog.leaflet.mobile.model.EntrySummary;
 import hu.psprog.leaflet.mobile.view.fragment.EntryDetailsFragment;
 import hu.psprog.leaflet.mobile.view.fragment.EntryListFragment;
-import hu.psprog.leaflet.mobile.viewmodel.CategoryListViewModel;
+import hu.psprog.leaflet.mobile.view.helper.FragmentFactory;
+import hu.psprog.leaflet.mobile.view.helper.NavigationMenuUpdater;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
-
-import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, EntryListFragment.OnEntryItemSelectedListener {
-
-    private static final String INTENT_ACTION_FILTER_BY_CATEGORY = "FILTER_BY_CATEGORY";
-    private static final int CATEGORIES_MENU_SECTION_INDEX = 2;
-
-    public static final String INTENT_PARAMETER_CATEGORY_ID = "category_id";
 
     private final CompositeDisposable disposables = new CompositeDisposable();
 
@@ -44,7 +34,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @BindView(R.id.nav_view)
     NavigationView navigationView;
 
-    private CategoryListViewModel categoryListViewModel;
+    private FragmentFactory fragmentFactory;
+    private NavigationMenuUpdater navigationMenuUpdater;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,14 +43,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
-        categoryListViewModel = ViewModelProviders.of(this).get(CategoryListViewModel.class);
+        // TODO configure Dagger DI
+        fragmentFactory = new FragmentFactory();
+        navigationMenuUpdater = new NavigationMenuUpdater(this);
 
         ActionBarDrawerToggle toggle = getToggle();
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(this);
-        updateMenu();
+        navigationMenuUpdater.updateMenu();
         changeFragment(new EntryListFragment());
     }
 
@@ -92,10 +85,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
 
-        Fragment targetFragment = getTargetFragment(item);
-        if (Objects.nonNull(targetFragment)) {
-            changeFragment(targetFragment);
-        }
+        fragmentFactory.getFragment(item)
+                .ifPresent(this::changeFragment);
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -113,55 +104,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         disposables.clear();
     }
 
-    private void updateMenu() {
-        Disposable subscriptionResult = categoryListViewModel.getCategoriesForMenu()
-                .subscribe(categoryList -> categoryList.getCategories().forEach(this::createMenuItem));
-        getCategoriesMenuSection().setVisible(true);
-        disposables.add(subscriptionResult);
-    }
-
-    private void createMenuItem(Category category) {
-        getCategoriesMenuSection()
-                .getSubMenu()
-                .add(category.getName())
-                .setIntent(buildCategoryMenuItemIntent(category))
-                .setIcon(R.drawable.ic_radio_button_checked_black_24dp);
-    }
-
-    private Intent buildCategoryMenuItemIntent(Category category) {
-        return new Intent()
-                .setAction(INTENT_ACTION_FILTER_BY_CATEGORY)
-                .putExtra(INTENT_PARAMETER_CATEGORY_ID, category.getId());
-    }
-
-    private MenuItem getCategoriesMenuSection() {
-        return navigationView.getMenu()
-                .getItem(CATEGORIES_MENU_SECTION_INDEX);
-    }
-
     private ActionBarDrawerToggle getToggle() {
         return new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-    }
-
-    private Fragment getTargetFragment(MenuItem item) {
-
-        Fragment targetFragment = null;
-        if (Objects.isNull(item.getIntent())) {
-            switch (item.getItemId()) {
-                case R.id.nav_home:
-                    targetFragment = new EntryListFragment();
-                    break;
-            }
-        } else {
-            switch (item.getIntent().getAction()) {
-                case INTENT_ACTION_FILTER_BY_CATEGORY:
-                    targetFragment = new EntryListFragment();
-                    targetFragment.setArguments(item.getIntent().getExtras());
-                    break;
-            }
-        }
-
-        return targetFragment;
     }
 
     private void changeFragment(Fragment targetFragment) {

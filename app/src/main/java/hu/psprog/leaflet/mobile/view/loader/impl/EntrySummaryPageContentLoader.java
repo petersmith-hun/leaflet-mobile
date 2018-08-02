@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-import static hu.psprog.leaflet.mobile.view.activity.MainActivity.INTENT_PARAMETER_CATEGORY_ID;
+import static hu.psprog.leaflet.mobile.view.helper.NavigationMenuUpdater.INTENT_PARAMETER_CATEGORY_ID;
 
 /**
  * {@link AbstractPageableContentLoader} implementation for loading {@link EntrySummaryPage} contents.
