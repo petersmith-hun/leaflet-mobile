@@ -21,8 +21,13 @@ import hu.psprog.leaflet.mobile.view.helper.FragmentFactory;
 import hu.psprog.leaflet.mobile.view.helper.NavigationMenuUpdater;
 import io.reactivex.disposables.CompositeDisposable;
 
+import java.util.Deque;
+import java.util.LinkedList;
+import java.util.Objects;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, EntryListFragment.OnEntryItemSelectedListener {
 
+    private static final int MAX_NUMBER_OF_STEPS_BACK = 5;
     private final CompositeDisposable disposables = new CompositeDisposable();
 
     @BindView(R.id.toolbar)
@@ -36,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private FragmentFactory fragmentFactory;
     private NavigationMenuUpdater navigationMenuUpdater;
+    private Deque<Fragment> previousFragments = new LinkedList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +68,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            Fragment previousFragment = previousFragments.poll();
+            if (Objects.isNull(previousFragment)) {
+                super.onBackPressed();
+            } else {
+                changeFragment(previousFragment, false);
+            }
         }
     }
 
@@ -109,10 +120,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void changeFragment(Fragment targetFragment) {
+        changeFragment(targetFragment, true);
+    }
+
+    private void changeFragment(Fragment targetFragment, boolean shouldSaveFragment) {
+        if (shouldSaveFragment) {
+            saveCurrentFragment();
+        }
         getSupportFragmentManager()
                 .beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .replace(R.id.fragment_container, targetFragment)
                 .commit();
+    }
+
+    private void saveCurrentFragment() {
+        previousFragments.push(getSupportFragmentManager().findFragmentById(R.id.fragment_container));
+        if (previousFragments.size() > MAX_NUMBER_OF_STEPS_BACK) {
+            previousFragments.pollLast();
+        }
     }
 }
