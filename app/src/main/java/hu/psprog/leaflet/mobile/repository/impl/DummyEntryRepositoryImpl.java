@@ -1,5 +1,6 @@
 package hu.psprog.leaflet.mobile.repository.impl;
 
+import android.util.Log;
 import hu.psprog.leaflet.mobile.model.Category;
 import hu.psprog.leaflet.mobile.model.EntryDetails;
 import hu.psprog.leaflet.mobile.model.EntrySummary;
@@ -7,6 +8,11 @@ import hu.psprog.leaflet.mobile.model.EntrySummaryPage;
 import hu.psprog.leaflet.mobile.repository.EntryRepository;
 import io.reactivex.Observable;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -24,9 +30,9 @@ public class DummyEntryRepositoryImpl implements EntryRepository {
     private static final String CATEGORY_TITLE_PATTERN = "[Category] Title #%s";
     private static final String CATEGORY_PROLOGUE_PATTERN = "From category=%s";
     private static final String AUTHOR = "petersmith";
-    private static final String CONTENT = "<p style=\"font-style: italic;\">Test entry</p>";
-    private static final String CREATED_DATE = "2018. August 2.";
-    private static final String TITLE = "Test entry";
+    private static final String CREATED_DATE = "Sunday, July 1, 2018 6:25 PM";
+    private static final String TITLE = "JWT authentikáció Spring Security alatt";
+    private static final String DEFAULT_CONTENT = "default_content";
 
     private ObservableFactory observableFactory;
 
@@ -41,7 +47,7 @@ public class DummyEntryRepositoryImpl implements EntryRepository {
             Thread.sleep(1000); // simulating long network call
             return EntryDetails.getBuilder()
                     .withAuthor(AUTHOR)
-                    .withContent(CONTENT)
+                    .withContent(getContent())
                     .withCreatedDate(CREATED_DATE)
                     .withTitle(TITLE)
                     .build();
@@ -84,6 +90,28 @@ public class DummyEntryRepositoryImpl implements EntryRepository {
                             .collect(Collectors.toList()))
                     .build();
         });
+    }
+
+    private String getContent() {
+
+        return getEntryContent()
+                .map(inputStream -> {
+                    String result;
+                    try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+                        result = reader.lines()
+                                .collect(Collectors.joining());
+                    } catch (IOException exc) {
+                        Log.e(DummyEntryRepositoryImpl.class.getSimpleName(), "Failed to read dummy entry content", exc);
+                        result = DEFAULT_CONTENT;
+                    }
+
+                    return result;
+                })
+                .orElse(DEFAULT_CONTENT);
+    }
+
+    private Optional<InputStream> getEntryContent() {
+        return Optional.ofNullable(getClass().getResourceAsStream("/res/raw/entry.html"));
     }
 
     private int calculateID(int index, int page) {
