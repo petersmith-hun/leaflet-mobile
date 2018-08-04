@@ -17,5 +17,6 @@
 
     <string name="detailsPageCSSTag">
         <![CDATA[<link rel=\"stylesheet\" type=\"text/css\" href=\"css/details_page.css\" /><link rel=\"stylesheet\" type=\"text/css\" href=\"css/calmdown.min.css\" />]]></string>
-    <string name="exceptionMessageLinkNotSpecified">Entry link not specified</string>
+    <string name="exceptionMessageLinkNotSpecified">Link not specified</string>
+    <string name="failedToLoadDocument">Failed to load document</string>
 </resources>

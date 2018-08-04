@@ -6,7 +6,7 @@ import io.reactivex.Observable;
 /**
  * Repository interface for accessing category data.
  * As accessing data might require network communication, every repository method
- * return requested data wrapped as {@link Observable}.
+ * returns requested data wrapped as {@link Observable}.
  *
  * @author Peter Smith
  */

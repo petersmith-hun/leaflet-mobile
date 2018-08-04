@@ -11,10 +11,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import hu.psprog.leaflet.mobile.R;
 import hu.psprog.leaflet.mobile.model.EntrySummary;
+import hu.psprog.leaflet.mobile.model.EntrySummaryPage;
 import hu.psprog.leaflet.mobile.view.adapter.EntryListRecyclerViewAdapter;
 import hu.psprog.leaflet.mobile.view.loader.impl.EntrySummaryPageContentLoader;
 import io.reactivex.disposables.CompositeDisposable;
 
+/**
+ * View for {@link EntrySummaryPage} as {@link Fragment}.
+ */
 public class EntryListFragment extends Fragment {
 
     private final CompositeDisposable disposables = new CompositeDisposable();

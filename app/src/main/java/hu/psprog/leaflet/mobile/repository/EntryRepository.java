@@ -8,16 +8,16 @@ import io.reactivex.Observable;
 /**
  * Repository interface for accessing entry data.
  * As accessing data might require network communication, every repository method
- * return requested data wrapped as {@link Observable}.
+ * returns requested data wrapped as {@link Observable}.
  *
  * @author Peter Smith
  */
 public interface EntryRepository {
 
     /**
-     * Returns entry as {@link EntryDetails} identified by given titleTextView.
+     * Returns entry as {@link EntryDetails} identified by given link.
      *
-     * @param link titleTextView as the ID of the entry
+     * @param link link as the ID of the entry
      * @return identified {@link EntryDetails} as {@link Observable}
      */
     Observable<EntryDetails> getEntry(String link);

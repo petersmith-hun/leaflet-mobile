@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.util.SparseArray;
 import android.view.MenuItem;
 import hu.psprog.leaflet.mobile.R;
+import hu.psprog.leaflet.mobile.view.fragment.DocumentDetailsFragment;
 import hu.psprog.leaflet.mobile.view.fragment.EntryListFragment;
 
 import java.util.HashMap;
@@ -31,6 +32,9 @@ public class FragmentFactory {
 
     static {
         FRAGMENTS_BY_MENU_ITEM_ID.put(R.id.nav_home, EntryListFragment::new);
+        FRAGMENTS_BY_MENU_ITEM_ID.put(R.id.nav_introduction,
+                () -> DocumentDetailsFragment.newInstance(DocumentDetailsFragment.DocumentType.INTRODUCTION));
+
         FRAGMENTS_BY_INTENT_ACTION.put(INTENT_ACTION_FILTER_BY_CATEGORY, EntryListFragment::new);
     }
 

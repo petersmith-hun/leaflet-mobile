@@ -44,7 +44,7 @@ public class DummyEntryRepositoryImpl implements EntryRepository {
     @Override
     public Observable<EntryDetails> getEntry(String link) {
         return observableFactory.create(() -> {
-            Thread.sleep(1000); // simulating long network call
+            Thread.sleep(2000); // simulating long network call
             return EntryDetails.getBuilder()
                     .withAuthor(AUTHOR)
                     .withContent(getContent())

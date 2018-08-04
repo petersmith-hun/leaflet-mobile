@@ -6,10 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import hu.psprog.leaflet.mobile.R;
+import hu.psprog.leaflet.mobile.model.EntryDetails;
 import hu.psprog.leaflet.mobile.view.loader.impl.EntryDetailsPageContentLoader;
 
 import static hu.psprog.leaflet.mobile.view.loader.impl.EntryDetailsPageContentLoader.ARG_ENTRY_LINK;
 
+/**
+ * View for {@link EntryDetails} as {@link Fragment}.
+ */
 public class EntryDetailsFragment extends Fragment {
 
     public static EntryDetailsFragment newInstance(String entryLink) {

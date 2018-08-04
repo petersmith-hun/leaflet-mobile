@@ -12,59 +12,53 @@ import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import hu.psprog.leaflet.mobile.R;
-import hu.psprog.leaflet.mobile.model.EntryDetails;
+import hu.psprog.leaflet.mobile.model.DocumentDetails;
 import hu.psprog.leaflet.mobile.view.helper.HTMLRenderer;
 import hu.psprog.leaflet.mobile.view.loader.AbstractDefaultContentLoader;
 import hu.psprog.leaflet.mobile.view.loader.AbstractPageableContentLoader;
-import hu.psprog.leaflet.mobile.viewmodel.EntryDetailsViewModel;
+import hu.psprog.leaflet.mobile.viewmodel.DocumentDetailsViewModel;
 import io.reactivex.Observable;
 
 import java.util.Optional;
 
 /**
- * {@link AbstractPageableContentLoader} implementation for loading {@link EntryDetails} contents.
+ * {@link AbstractPageableContentLoader} implementation for loading {@link DocumentDetails} contents.
  *
  * @author Peter Smith
  */
-public class EntryDetailsPageContentLoader extends AbstractDefaultContentLoader<EntryDetails> {
+public class DocumentDetailsPageContentLoader extends AbstractDefaultContentLoader<DocumentDetails> {
 
-    public static final String ARG_ENTRY_LINK = "entry_link";
+    public static final String ARG_DOCUMENT_LINK = "document_link";
 
-    private EntryDetailsViewModel entryDetailsViewModel;
+    private DocumentDetailsViewModel documentDetailsViewModel;
     private HTMLRenderer htmlRenderer;
 
-    @BindView(R.id.detailsAuthor)
-    TextView authorTextView;
+    @BindView(R.id.documentTitle)
+    TextView documentTitleTextView;
 
-    @BindView(R.id.detailsTitle)
-    TextView titleTextView;
-
-    @BindView(R.id.detailsCreatedDate)
-    TextView createdDateTextView;
-
-    @BindView(R.id.detailsContent)
+    @BindView(R.id.documentContent)
     WebView contentWebView;
 
-    @BindView(R.id.entryDetailsScrollView)
+    @BindView(R.id.documentDetailsScrollView)
     ScrollView scrollView;
+
+    @BindView(R.id.documentDetailsProgressBar)
+    ProgressBar progressBar;
 
     @BindString(R.string.exceptionMessageLinkNotSpecified)
     String exceptionMessageLinkNotSpecified;
 
-    @BindView(R.id.entryDetailsProgressBar)
-    ProgressBar progressBar;
-
-    public EntryDetailsPageContentLoader(Fragment fragment, View view) {
+    public DocumentDetailsPageContentLoader(Fragment fragment, View view) {
         super(fragment, view);
         ButterKnife.bind(this, getView());
-        entryDetailsViewModel = ViewModelProviders.of(getFragment()).get(EntryDetailsViewModel.class);
+        documentDetailsViewModel = ViewModelProviders.of(getFragment()).get(DocumentDetailsViewModel.class);
         htmlRenderer = new HTMLRenderer(view);
     }
 
     @Override
-    protected Observable<EntryDetails> callViewModel() {
+    protected Observable<DocumentDetails> callViewModel() {
         return extractLink()
-                .map(entryDetailsViewModel::getEntryDetails)
+                .map(documentDetailsViewModel::getDocument)
                 .orElseGet(() -> Observable.error(new IllegalArgumentException(exceptionMessageLinkNotSpecified)));
     }
 
@@ -75,10 +69,8 @@ public class EntryDetailsPageContentLoader extends AbstractDefaultContentLoader<
     }
 
     @Override
-    protected void handleSuccess(EntryDetails response) {
-        authorTextView.setText(response.getAuthor());
-        titleTextView.setText(response.getTitle());
-        createdDateTextView.setText(response.getCreatedDate());
+    protected void handleSuccess(DocumentDetails response) {
+        documentTitleTextView.setText(response.getTitle());
         htmlRenderer.render(contentWebView, response.getContent());
         progressBar.setVisibility(View.GONE);
         scrollView.setVisibility(View.VISIBLE);
@@ -87,11 +79,11 @@ public class EntryDetailsPageContentLoader extends AbstractDefaultContentLoader<
     @Override
     protected void handleException(Throwable throwable) {
         progressBar.setVisibility(View.GONE);
-        Toast.makeText(getFragment().getContext(), R.string.entryFailedToLoad, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getFragment().getContext(), R.string.failedToLoadDocument, Toast.LENGTH_SHORT).show();
     }
 
     private Optional<String> extractLink() {
         return Optional.ofNullable(getFragment().getArguments())
-                .map(bundle -> bundle.getString(ARG_ENTRY_LINK));
+                .map(bundle -> bundle.getString(ARG_DOCUMENT_LINK));
     }
 }
