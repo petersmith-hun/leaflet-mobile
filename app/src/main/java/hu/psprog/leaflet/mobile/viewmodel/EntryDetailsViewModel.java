@@ -5,8 +5,6 @@ import hu.psprog.leaflet.mobile.model.EntryDetails;
 import hu.psprog.leaflet.mobile.repository.EntryRepository;
 import hu.psprog.leaflet.mobile.repository.impl.DummyEntryRepositoryImpl;
 import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * {@link ViewModel} implementation for entry details operation.
@@ -23,8 +21,6 @@ public class EntryDetailsViewModel extends ViewModel {
     }
 
     public Observable<EntryDetails> getEntryDetails(String link) {
-        return entryRepository.getEntry(link)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+        return entryRepository.getEntry(link);
     }
 }

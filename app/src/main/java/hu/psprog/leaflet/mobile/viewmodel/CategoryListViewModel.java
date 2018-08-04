@@ -5,8 +5,6 @@ import hu.psprog.leaflet.mobile.model.CategoryList;
 import hu.psprog.leaflet.mobile.repository.CategoryRepository;
 import hu.psprog.leaflet.mobile.repository.impl.DummyCategoryRepositoryImpl;
 import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * {@link ViewModel} implementation for category listing operations.
@@ -23,8 +21,6 @@ public class CategoryListViewModel extends ViewModel {
     }
 
     public Observable<CategoryList> getCategoriesForMenu() {
-        return categoryRepository.getPublicCategories()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+        return categoryRepository.getPublicCategories();
     }
 }

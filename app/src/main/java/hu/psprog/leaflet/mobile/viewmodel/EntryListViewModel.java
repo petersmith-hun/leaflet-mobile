@@ -6,10 +6,6 @@ import hu.psprog.leaflet.mobile.model.EntrySummaryPage;
 import hu.psprog.leaflet.mobile.repository.EntryRepository;
 import hu.psprog.leaflet.mobile.repository.impl.DummyEntryRepositoryImpl;
 import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
-
-import java.util.function.Supplier;
 
 /**
  * {@link ViewModel} implementation for entry listing operations.
@@ -26,22 +22,16 @@ public class EntryListViewModel extends ViewModel {
     }
 
     public Observable<EntrySummaryPage> getEntrySummaryPage(int page) {
-        return createObservable(() -> entryRepository.getPageOfEntries(page));
+        return entryRepository.getPageOfEntries(page);
     }
 
     public Observable<EntrySummaryPage> getEntrySummaryPageByCategory(int page, long categoryID) {
-        return createObservable(() -> entryRepository.getPageOfEntriesByCategory(page, buildCategory(categoryID)));
+        return entryRepository.getPageOfEntriesByCategory(page, buildCategory(categoryID));
     }
 
     private Category buildCategory(long categoryID) {
         return Category.getBuilder()
                 .withId(categoryID)
                 .build();
-    }
-
-    private Observable<EntrySummaryPage> createObservable(Supplier<Observable<EntrySummaryPage>> supplier) {
-        return supplier.get()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
     }
 }
