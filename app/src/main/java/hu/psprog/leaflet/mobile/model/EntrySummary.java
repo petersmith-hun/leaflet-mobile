@@ -5,7 +5,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
- * Entry prologueTextView model object for entry lists.
+ * Entry summary model object for entry lists.
  *
  * @author Peter Smith
  */
@@ -54,7 +54,7 @@ public class EntrySummary {
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .append("titleTextView", link)
+                .append("link", link)
                 .append("title", title)
                 .append("prologue", prologue)
                 .toString();

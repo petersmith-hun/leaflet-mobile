@@ -42,7 +42,7 @@ public class FragmentFactory {
      * Retrieves a new, instantiated fragment for given {@link MenuItem}.
      *
      * @param menuItem {@link MenuItem} to retrieve fragment for
-     * @return created fragment wrapped as {@link Optional}, or {@link Optional#empty()} is no mapping found
+     * @return created fragment wrapped as {@link Optional}, or {@link Optional#empty()} if no mapping found
      */
     public Optional<Fragment> getFragment(MenuItem menuItem) {
 
