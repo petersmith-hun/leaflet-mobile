@@ -8,6 +8,8 @@ import hu.psprog.leaflet.mobile.model.EntrySummaryPage;
 import hu.psprog.leaflet.mobile.repository.EntryRepository;
 import io.reactivex.Observable;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,6 +23,7 @@ import java.util.stream.IntStream;
  *
  * @author Peter Smith
  */
+@Singleton
 public class DummyEntryRepositoryImpl implements EntryRepository {
 
     private static final int ITEM_COUNT_PER_PAGE = 10;
@@ -36,9 +39,9 @@ public class DummyEntryRepositoryImpl implements EntryRepository {
 
     private ObservableFactory observableFactory;
 
-    public DummyEntryRepositoryImpl() {
-        // TODO configure Dagger DI
-        this.observableFactory = new ObservableFactory();
+    @Inject
+    public DummyEntryRepositoryImpl(ObservableFactory observableFactory) {
+        this.observableFactory = observableFactory;
     }
 
     @Override

@@ -54,6 +54,7 @@ dependencies {
     implementation "com.jakewharton:butterknife:$butterknifeVersion"
     implementation "com.google.dagger:dagger:$daggerVersion"
     implementation "com.google.dagger:dagger-android:$daggerVersion"
+    implementation "com.google.dagger:dagger-android-support:$daggerVersion"
     implementation "org.apache.commons:commons-lang3:$commonsLangVersion"
 
     annotationProcessor "com.jakewharton:butterknife-compiler:$butterknifeVersion"

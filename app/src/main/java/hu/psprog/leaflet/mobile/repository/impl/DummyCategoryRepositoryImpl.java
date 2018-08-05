@@ -5,6 +5,8 @@ import hu.psprog.leaflet.mobile.model.CategoryList;
 import hu.psprog.leaflet.mobile.repository.CategoryRepository;
 import io.reactivex.Observable;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -13,6 +15,7 @@ import java.util.stream.IntStream;
  *
  * @author Peter Smith
  */
+@Singleton
 public class DummyCategoryRepositoryImpl implements CategoryRepository {
 
     private static final int NUMBER_OF_CATEGORIES = 4;
@@ -20,9 +23,9 @@ public class DummyCategoryRepositoryImpl implements CategoryRepository {
 
     private ObservableFactory observableFactory;
 
-    public DummyCategoryRepositoryImpl() {
-        // TODO configure Dagger DI
-        this.observableFactory = new ObservableFactory();
+    @Inject
+    public DummyCategoryRepositoryImpl(ObservableFactory observableFactory) {
+        this.observableFactory = observableFactory;
     }
 
     @Override

@@ -8,6 +8,8 @@ import hu.psprog.leaflet.mobile.R;
 import hu.psprog.leaflet.mobile.view.fragment.DocumentDetailsFragment;
 import hu.psprog.leaflet.mobile.view.fragment.EntryListFragment;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -24,6 +26,7 @@ import static hu.psprog.leaflet.mobile.view.helper.NavigationMenuUpdater.INTENT_
  *
  * @author Peter Smith
  */
+@Singleton
 public class FragmentFactory {
 
     private static final int SPARSE_ARRAY_INITIAL_CAPACITY = 1;
@@ -36,6 +39,10 @@ public class FragmentFactory {
                 () -> DocumentDetailsFragment.newInstance(DocumentDetailsFragment.DocumentType.INTRODUCTION));
 
         FRAGMENTS_BY_INTENT_ACTION.put(INTENT_ACTION_FILTER_BY_CATEGORY, EntryListFragment::new);
+    }
+
+    @Inject
+    public FragmentFactory() {
     }
 
     /**

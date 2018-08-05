@@ -5,6 +5,8 @@ import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.io.Serializable;
 
 /**
@@ -12,7 +14,12 @@ import java.io.Serializable;
  *
  * @author Peter Smith
  */
-class ObservableFactory {
+@Singleton
+public class ObservableFactory {
+
+    @Inject
+    public ObservableFactory() {
+    }
 
     /**
      * Wraps a call in an emitter based observable.

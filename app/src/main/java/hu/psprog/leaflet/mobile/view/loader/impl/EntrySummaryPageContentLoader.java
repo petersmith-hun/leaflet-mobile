@@ -1,5 +1,6 @@
 package hu.psprog.leaflet.mobile.view.loader.impl;
 
+import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -39,11 +40,11 @@ public class EntrySummaryPageContentLoader extends AbstractPageableContentLoader
     @BindView(R.id.entryList)
     RecyclerView recyclerView;
 
-    public EntrySummaryPageContentLoader(Fragment fragment, View view, EntryListRecyclerViewAdapter entryListRecyclerViewAdapter) {
+    public EntrySummaryPageContentLoader(Fragment fragment, View view, EntryListRecyclerViewAdapter entryListRecyclerViewAdapter, ViewModelProvider.Factory viewModelFactory) {
         super(fragment, view);
         ButterKnife.bind(this, getView());
         this.entryListRecyclerViewAdapter = entryListRecyclerViewAdapter;
-        entryListViewModel = ViewModelProviders.of(getFragment()).get(EntryListViewModel.class);
+        entryListViewModel = ViewModelProviders.of(getFragment(), viewModelFactory).get(EntryListViewModel.class);
     }
 
     @Override

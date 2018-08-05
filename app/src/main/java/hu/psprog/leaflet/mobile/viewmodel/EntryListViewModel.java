@@ -4,7 +4,6 @@ import android.arch.lifecycle.ViewModel;
 import hu.psprog.leaflet.mobile.model.Category;
 import hu.psprog.leaflet.mobile.model.EntrySummaryPage;
 import hu.psprog.leaflet.mobile.repository.EntryRepository;
-import hu.psprog.leaflet.mobile.repository.impl.DummyEntryRepositoryImpl;
 import io.reactivex.Observable;
 
 /**
@@ -16,9 +15,8 @@ public class EntryListViewModel extends ViewModel {
 
     private final EntryRepository entryRepository;
 
-    public EntryListViewModel() {
-        // TODO configure Dagger DI
-        this.entryRepository = new DummyEntryRepositoryImpl();
+    public EntryListViewModel(EntryRepository entryRepository) {
+        this.entryRepository = entryRepository;
     }
 
     public Observable<EntrySummaryPage> getEntrySummaryPage(int page) {
