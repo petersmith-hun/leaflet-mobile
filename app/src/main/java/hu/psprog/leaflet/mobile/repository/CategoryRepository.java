@@ -10,7 +10,7 @@ import io.reactivex.Observable;
  *
  * @author Peter Smith
  */
-public interface CategoryRepository {
+public interface CategoryRepository extends Repository {
 
     /**
      * Returns list of public categories.

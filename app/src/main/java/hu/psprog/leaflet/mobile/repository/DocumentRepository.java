@@ -10,7 +10,7 @@ import io.reactivex.Observable;
  *
  * @author Peter Smith
  */
-public interface DocumentRepository {
+public interface DocumentRepository extends Repository {
 
     /**
      * Returns document as {@link DocumentDetails} identified by given link.

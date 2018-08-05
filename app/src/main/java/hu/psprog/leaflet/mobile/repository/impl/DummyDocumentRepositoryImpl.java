@@ -5,6 +5,8 @@ import hu.psprog.leaflet.mobile.model.DocumentDetails;
 import hu.psprog.leaflet.mobile.repository.DocumentRepository;
 import io.reactivex.Observable;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,15 +19,16 @@ import java.util.stream.Collectors;
  *
  * @author Peter Smith
  */
+@Singleton
 public class DummyDocumentRepositoryImpl implements DocumentRepository {
 
     private static final String DEFAULT_CONTENT = "default_content";
 
     private ObservableFactory observableFactory;
 
-    public DummyDocumentRepositoryImpl() {
-        // TODO configure Dagger DI
-        observableFactory = new ObservableFactory();
+    @Inject
+    public DummyDocumentRepositoryImpl(ObservableFactory observableFactory) {
+        this.observableFactory = observableFactory;
     }
 
     @Override

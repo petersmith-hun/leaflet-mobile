@@ -1,5 +1,6 @@
 package hu.psprog.leaflet.mobile.view.loader.impl;
 
+import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.support.v4.app.Fragment;
 import android.view.View;
@@ -48,10 +49,10 @@ public class DocumentDetailsPageContentLoader extends AbstractDefaultContentLoad
     @BindString(R.string.exceptionMessageLinkNotSpecified)
     String exceptionMessageLinkNotSpecified;
 
-    public DocumentDetailsPageContentLoader(Fragment fragment, View view) {
+    public DocumentDetailsPageContentLoader(Fragment fragment, View view, ViewModelProvider.Factory viewModelFactory) {
         super(fragment, view);
         ButterKnife.bind(this, getView());
-        documentDetailsViewModel = ViewModelProviders.of(getFragment()).get(DocumentDetailsViewModel.class);
+        documentDetailsViewModel = ViewModelProviders.of(getFragment(), viewModelFactory).get(DocumentDetailsViewModel.class);
         htmlRenderer = new HTMLRenderer(view);
     }
 

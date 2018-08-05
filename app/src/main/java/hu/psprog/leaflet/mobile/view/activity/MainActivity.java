@@ -13,14 +13,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import dagger.android.AndroidInjection;
 import hu.psprog.leaflet.mobile.R;
 import hu.psprog.leaflet.mobile.model.EntrySummary;
 import hu.psprog.leaflet.mobile.view.fragment.EntryDetailsFragment;
 import hu.psprog.leaflet.mobile.view.fragment.EntryListFragment;
 import hu.psprog.leaflet.mobile.view.helper.FragmentFactory;
 import hu.psprog.leaflet.mobile.view.helper.NavigationMenuUpdater;
+import hu.psprog.leaflet.mobile.viewmodel.factory.DependencyInjectingViewModelFactory;
 import io.reactivex.disposables.CompositeDisposable;
 
+import javax.inject.Inject;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.Objects;
@@ -39,26 +42,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @BindView(R.id.nav_view)
     NavigationView navigationView;
 
-    private FragmentFactory fragmentFactory;
-    private NavigationMenuUpdater navigationMenuUpdater;
     private Deque<Fragment> previousFragments = new LinkedList<>();
+
+    @Inject
+    FragmentFactory fragmentFactory;
+
+    @Inject
+    DependencyInjectingViewModelFactory viewModelFactory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        AndroidInjection.inject(this);
         setSupportActionBar(toolbar);
-        // TODO configure Dagger DI
-        fragmentFactory = new FragmentFactory();
-        navigationMenuUpdater = new NavigationMenuUpdater(this);
 
         ActionBarDrawerToggle toggle = getToggle();
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(this);
-        navigationMenuUpdater.updateMenu();
+        new NavigationMenuUpdater(this, viewModelFactory).updateMenu();
         changeFragment(new EntryListFragment());
     }
 

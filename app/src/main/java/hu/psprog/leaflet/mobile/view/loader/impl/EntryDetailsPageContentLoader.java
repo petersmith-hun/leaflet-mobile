@@ -1,5 +1,6 @@
 package hu.psprog.leaflet.mobile.view.loader.impl;
 
+import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.support.v4.app.Fragment;
 import android.view.View;
@@ -54,10 +55,10 @@ public class EntryDetailsPageContentLoader extends AbstractDefaultContentLoader<
     @BindView(R.id.entryDetailsProgressBar)
     ProgressBar progressBar;
 
-    public EntryDetailsPageContentLoader(Fragment fragment, View view) {
+    public EntryDetailsPageContentLoader(Fragment fragment, View view, ViewModelProvider.Factory viewModelFactory) {
         super(fragment, view);
         ButterKnife.bind(this, getView());
-        entryDetailsViewModel = ViewModelProviders.of(getFragment()).get(EntryDetailsViewModel.class);
+        entryDetailsViewModel = ViewModelProviders.of(getFragment(), viewModelFactory).get(EntryDetailsViewModel.class);
         htmlRenderer = new HTMLRenderer(view);
     }
 

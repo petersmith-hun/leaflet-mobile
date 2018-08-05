@@ -9,12 +9,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import dagger.android.support.AndroidSupportInjection;
 import hu.psprog.leaflet.mobile.R;
 import hu.psprog.leaflet.mobile.model.EntrySummary;
 import hu.psprog.leaflet.mobile.model.EntrySummaryPage;
 import hu.psprog.leaflet.mobile.view.adapter.EntryListRecyclerViewAdapter;
 import hu.psprog.leaflet.mobile.view.loader.impl.EntrySummaryPageContentLoader;
+import hu.psprog.leaflet.mobile.viewmodel.factory.DependencyInjectingViewModelFactory;
 import io.reactivex.disposables.CompositeDisposable;
+
+import javax.inject.Inject;
 
 /**
  * View for {@link EntrySummaryPage} as {@link Fragment}.
@@ -25,6 +29,9 @@ public class EntryListFragment extends Fragment {
     private OnEntryItemSelectedListener itemSelectionListener;
     private EntryListRecyclerViewAdapter entryListRecyclerViewAdapter;
 
+    @Inject
+    DependencyInjectingViewModelFactory viewModelFactory;
+
     @BindView(R.id.entryList)
     RecyclerView recyclerView;
 
@@ -32,6 +39,7 @@ public class EntryListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         entryListRecyclerViewAdapter = new EntryListRecyclerViewAdapter();
+        AndroidSupportInjection.inject(this);
     }
 
     @Override
@@ -40,7 +48,7 @@ public class EntryListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_entry_list, container, false);
         ButterKnife.bind(this, view);
         entryListRecyclerViewAdapter.setEntryItemSelectedListener(itemSelectionListener);
-        EntrySummaryPageContentLoader entrySummaryPageContentLoader = new EntrySummaryPageContentLoader(this, view, entryListRecyclerViewAdapter);
+        EntrySummaryPageContentLoader entrySummaryPageContentLoader = new EntrySummaryPageContentLoader(this, view, entryListRecyclerViewAdapter, viewModelFactory);
 
         recyclerView.setVisibility(View.GONE);
         recyclerView.setAdapter(entryListRecyclerViewAdapter);

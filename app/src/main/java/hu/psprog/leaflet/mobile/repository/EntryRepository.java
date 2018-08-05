@@ -12,7 +12,7 @@ import io.reactivex.Observable;
  *
  * @author Peter Smith
  */
-public interface EntryRepository {
+public interface EntryRepository extends Repository {
 
     /**
      * Returns entry as {@link EntryDetails} identified by given link.

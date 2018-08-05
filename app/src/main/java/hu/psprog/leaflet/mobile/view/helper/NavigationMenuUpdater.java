@@ -1,5 +1,6 @@
 package hu.psprog.leaflet.mobile.view.helper;
 
+import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
@@ -31,8 +32,8 @@ public class NavigationMenuUpdater {
     @BindView(R.id.nav_view)
     NavigationView navigationView;
 
-    public NavigationMenuUpdater(FragmentActivity fragmentActivity) {
-        this.categoryListViewModel = ViewModelProviders.of(fragmentActivity).get(CategoryListViewModel.class);
+    public NavigationMenuUpdater(FragmentActivity fragmentActivity, ViewModelProvider.Factory viewModelFactory) {
+        this.categoryListViewModel = ViewModelProviders.of(fragmentActivity, viewModelFactory).get(CategoryListViewModel.class);
         ButterKnife.bind(this, fragmentActivity);
     }
 
