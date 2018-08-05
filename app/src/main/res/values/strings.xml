@@ -1,9 +1,22 @@
 <resources>
-    <string name="app_name">LeafletMobile</string>
+    <string name="app_name">Leaflet Mobile</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_title">Leaflet Mobile</string>
+    <string name="nav_header_subtitle">psprog.hu</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+    <string name="placeholder">placeholder</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="menu_item_home">Home</string>
+    <string name="menu_group_categories">Categories</string>
+    <string name="menu_item_introduction">Introduction</string>
+    <string name="entrySummaryPageLoadFailure">Failed to load entries</string>
+    <string name="entryFailedToLoad">Failed to load entry</string>
+
+    <string name="detailsPageCSSTag">
+        <![CDATA[<link rel=\"stylesheet\" type=\"text/css\" href=\"css/details_page.css\" /><link rel=\"stylesheet\" type=\"text/css\" href=\"css/calmdown.min.css\" />]]></string>
+    <string name="exceptionMessageLinkNotSpecified">Link not specified</string>
+    <string name="failedToLoadDocument">Failed to load document</string>
 </resources>
