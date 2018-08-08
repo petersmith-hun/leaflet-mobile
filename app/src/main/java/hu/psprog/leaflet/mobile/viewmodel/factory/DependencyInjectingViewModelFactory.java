@@ -7,9 +7,9 @@ import hu.psprog.leaflet.mobile.repository.CategoryRepository;
 import hu.psprog.leaflet.mobile.repository.DocumentRepository;
 import hu.psprog.leaflet.mobile.repository.EntryRepository;
 import hu.psprog.leaflet.mobile.repository.Repository;
-import hu.psprog.leaflet.mobile.repository.impl.DummyCategoryRepositoryImpl;
-import hu.psprog.leaflet.mobile.repository.impl.DummyDocumentRepositoryImpl;
-import hu.psprog.leaflet.mobile.repository.impl.DummyEntryRepositoryImpl;
+import hu.psprog.leaflet.mobile.repository.impl.CategoryRepositoryImpl;
+import hu.psprog.leaflet.mobile.repository.impl.DocumentRepositoryImpl;
+import hu.psprog.leaflet.mobile.repository.impl.EntryRepositoryImpl;
 import hu.psprog.leaflet.mobile.viewmodel.CategoryListViewModel;
 import hu.psprog.leaflet.mobile.viewmodel.DocumentDetailsViewModel;
 import hu.psprog.leaflet.mobile.viewmodel.EntryDetailsViewModel;
@@ -35,10 +35,10 @@ public class DependencyInjectingViewModelFactory implements ViewModelProvider.Fa
     private static final Map<Class<? extends ViewModel>, Function<Repository, ViewModel>> VIEW_MODEL_CREATOR_MAPPING = new HashMap<>();
 
     static {
-        VIEW_MODEL_TO_REPOSITORY_MAPPING.put(CategoryListViewModel.class, DummyCategoryRepositoryImpl.class);
-        VIEW_MODEL_TO_REPOSITORY_MAPPING.put(DocumentDetailsViewModel.class, DummyDocumentRepositoryImpl.class);
-        VIEW_MODEL_TO_REPOSITORY_MAPPING.put(EntryDetailsViewModel.class, DummyEntryRepositoryImpl.class);
-        VIEW_MODEL_TO_REPOSITORY_MAPPING.put(EntryListViewModel.class, DummyEntryRepositoryImpl.class);
+        VIEW_MODEL_TO_REPOSITORY_MAPPING.put(CategoryListViewModel.class, CategoryRepositoryImpl.class);
+        VIEW_MODEL_TO_REPOSITORY_MAPPING.put(DocumentDetailsViewModel.class, DocumentRepositoryImpl.class);
+        VIEW_MODEL_TO_REPOSITORY_MAPPING.put(EntryDetailsViewModel.class, EntryRepositoryImpl.class);
+        VIEW_MODEL_TO_REPOSITORY_MAPPING.put(EntryListViewModel.class, EntryRepositoryImpl.class);
 
         VIEW_MODEL_CREATOR_MAPPING.put(CategoryListViewModel.class, repository -> new CategoryListViewModel((CategoryRepository) repository));
         VIEW_MODEL_CREATOR_MAPPING.put(DocumentDetailsViewModel.class, repository -> new DocumentDetailsViewModel((DocumentRepository) repository));
