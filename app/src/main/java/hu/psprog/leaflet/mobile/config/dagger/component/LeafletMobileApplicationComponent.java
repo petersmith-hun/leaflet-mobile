@@ -3,6 +3,7 @@ package hu.psprog.leaflet.mobile.config.dagger.component;
 import dagger.Component;
 import dagger.android.AndroidInjector;
 import hu.psprog.leaflet.mobile.LeafletMobileApplication;
+import hu.psprog.leaflet.mobile.config.dagger.module.ApplicationModule;
 import hu.psprog.leaflet.mobile.config.dagger.module.BridgeClientConfigurationModule;
 import hu.psprog.leaflet.mobile.config.dagger.module.BridgeServiceConfigurationModule;
 import hu.psprog.leaflet.mobile.config.dagger.module.LeafletMobileApplicationModule;
@@ -18,6 +19,7 @@ import javax.inject.Singleton;
  */
 @Singleton
 @Component(modules = {
+        ApplicationModule.class,
         BridgeClientConfigurationModule.class,
         BridgeServiceConfigurationModule.class,
         LeafletMobileApplicationModule.class,

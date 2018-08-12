@@ -9,6 +9,10 @@ import dagger.android.HasActivityInjector;
 import dagger.android.support.HasSupportFragmentInjector;
 import hu.psprog.leaflet.mobile.config.dagger.component.DaggerLeafletMobileApplicationComponent;
 import hu.psprog.leaflet.mobile.config.dagger.component.LeafletMobileApplicationComponent;
+import hu.psprog.leaflet.mobile.config.dagger.module.ApplicationModule;
+import hu.psprog.leaflet.mobile.config.dagger.module.BridgeClientConfigurationModule;
+import hu.psprog.leaflet.mobile.config.dagger.module.BridgeServiceConfigurationModule;
+import hu.psprog.leaflet.mobile.config.dagger.module.ViewModelFactoryModule;
 
 import javax.inject.Inject;
 
@@ -30,7 +34,12 @@ public class LeafletMobileApplication extends Application implements HasActivity
     @Override
     public void onCreate() {
         super.onCreate();
-        applicationComponent = DaggerLeafletMobileApplicationComponent.create();
+        applicationComponent = DaggerLeafletMobileApplicationComponent.builder()
+                .applicationModule(new ApplicationModule(this))
+                .bridgeClientConfigurationModule(new BridgeClientConfigurationModule())
+                .bridgeServiceConfigurationModule(new BridgeServiceConfigurationModule())
+                .viewModelFactoryModule(new ViewModelFactoryModule())
+                .build();
         applicationComponent.inject(this);
     }
 

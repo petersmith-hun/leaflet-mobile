@@ -8,6 +8,8 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 /**
+ * Converts {@link CategoryDataModel} to {@link Category}.
+ *
  * @author Peter Smith
  */
 @Singleton

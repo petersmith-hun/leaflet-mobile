@@ -18,6 +18,8 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 /**
+ * Implementation of {@link EntryRepository}.
+ *
  * @author Peter Smith
  */
 @Singleton

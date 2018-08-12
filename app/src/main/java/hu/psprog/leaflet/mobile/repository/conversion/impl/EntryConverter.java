@@ -9,6 +9,8 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 /**
+ * Converts {@link ExtendedEntryDataModel} wrapped in {@link WrapperBodyDataModel} to {@link EntryDetails}.
+ *
  * @author Peter Smith
  */
 @Singleton

@@ -12,6 +12,8 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 /**
+ * Implementation of {@link DocumentRepository}.
+ *
  * @author Peter Smith
  */
 @Singleton

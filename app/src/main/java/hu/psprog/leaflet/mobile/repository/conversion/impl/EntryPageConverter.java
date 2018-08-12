@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
+ * Converts {@link EntryListDataModel} wrapped in {@link WrapperBodyDataModel} to {@link EntrySummaryPage}.
+ *
  * @author Peter Smith
  */
 @Singleton

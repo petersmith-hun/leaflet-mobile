@@ -9,6 +9,8 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 /**
+ * Converts {@link DocumentDataModel} wrapped in {@link WrapperBodyDataModel} to {@link DocumentDetails}.
+ *
  * @author Peter Smith
  */
 @Singleton

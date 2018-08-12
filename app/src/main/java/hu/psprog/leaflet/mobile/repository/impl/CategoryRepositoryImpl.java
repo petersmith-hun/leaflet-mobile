@@ -11,6 +11,8 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 /**
+ * Implementation of {@link CategoryRepository}.
+ *
  * @author Peter Smith
  */
 @Singleton

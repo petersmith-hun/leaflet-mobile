@@ -18,8 +18,9 @@ import hu.psprog.leaflet.bridge.client.request.strategy.impl.PostCallStrategy;
 import hu.psprog.leaflet.bridge.client.request.strategy.impl.PutCallStrategy;
 import hu.psprog.leaflet.mobile.BuildConfig;
 import hu.psprog.leaflet.mobile.bridge.support.AndroidBridgeRequestAdapter;
-import hu.psprog.leaflet.mobile.bridge.support.JerseyFilterExclusionFeature;
 import hu.psprog.leaflet.mobile.bridge.support.AndroidRequestAuthentication;
+import hu.psprog.leaflet.mobile.bridge.support.JerseyFilterExclusionFeature;
+import hu.psprog.leaflet.mobile.preferences.ApplicationPreferencesProvider;
 
 import javax.inject.Singleton;
 import javax.ws.rs.client.ClientBuilder;
@@ -28,6 +29,8 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
+ * Dagger module to configure Bridge Client.
+ *
  * @author Peter Smith
  */
 @Module
@@ -35,8 +38,8 @@ public class BridgeClientConfigurationModule {
 
     @Provides
     @Singleton
-    public RequestAdapter requestAdapter() {
-        return new AndroidBridgeRequestAdapter();
+    public RequestAdapter requestAdapter(ApplicationPreferencesProvider applicationPreferencesProvider) {
+        return new AndroidBridgeRequestAdapter(applicationPreferencesProvider);
     }
 
     @Provides

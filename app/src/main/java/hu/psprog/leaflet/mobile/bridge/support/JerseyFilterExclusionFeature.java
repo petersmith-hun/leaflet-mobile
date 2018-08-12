@@ -8,6 +8,8 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
+ * Feature implementation for Jersey client to exclude unnecessary filters.
+ *
  * @author Peter Smith
  */
 public class JerseyFilterExclusionFeature implements Feature {

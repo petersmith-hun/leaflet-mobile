@@ -9,6 +9,8 @@ import javax.inject.Singleton;
 import java.util.stream.Collectors;
 
 /**
+ * Converts {@link CategoryListDataModel} to {@link CategoryList}.
+ *
  * @author Peter Smith
  */
 @Singleton
