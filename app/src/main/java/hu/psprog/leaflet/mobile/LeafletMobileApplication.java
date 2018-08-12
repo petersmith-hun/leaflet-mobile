@@ -12,6 +12,7 @@ import hu.psprog.leaflet.mobile.config.dagger.component.LeafletMobileApplication
 import hu.psprog.leaflet.mobile.config.dagger.module.ApplicationModule;
 import hu.psprog.leaflet.mobile.config.dagger.module.BridgeClientConfigurationModule;
 import hu.psprog.leaflet.mobile.config.dagger.module.BridgeServiceConfigurationModule;
+import hu.psprog.leaflet.mobile.config.dagger.module.SpannableConfigurationModule;
 import hu.psprog.leaflet.mobile.config.dagger.module.ViewModelFactoryModule;
 
 import javax.inject.Inject;
@@ -38,6 +39,7 @@ public class LeafletMobileApplication extends Application implements HasActivity
                 .applicationModule(new ApplicationModule(this))
                 .bridgeClientConfigurationModule(new BridgeClientConfigurationModule())
                 .bridgeServiceConfigurationModule(new BridgeServiceConfigurationModule())
+                .spannableConfigurationModule(new SpannableConfigurationModule(this))
                 .viewModelFactoryModule(new ViewModelFactoryModule())
                 .build();
         applicationComponent.inject(this);

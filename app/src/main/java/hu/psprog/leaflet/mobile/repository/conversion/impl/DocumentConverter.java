@@ -27,7 +27,7 @@ public class DocumentConverter implements Converter<WrapperBodyDataModel<Documen
         return DocumentDetails.getBuilder()
                 .withLink(documentDataModel.getLink())
                 .withTitle(documentDataModel.getTitle())
-                .withContent(documentDataModel.getContent())
+                .withContent(documentDataModel.getRawContent())
                 .build();
     }
 }
