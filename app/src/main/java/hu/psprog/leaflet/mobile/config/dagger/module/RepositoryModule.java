@@ -5,9 +5,9 @@ import dagger.Module;
 import hu.psprog.leaflet.mobile.repository.CategoryRepository;
 import hu.psprog.leaflet.mobile.repository.DocumentRepository;
 import hu.psprog.leaflet.mobile.repository.EntryRepository;
-import hu.psprog.leaflet.mobile.repository.impl.DummyCategoryRepositoryImpl;
-import hu.psprog.leaflet.mobile.repository.impl.DummyDocumentRepositoryImpl;
-import hu.psprog.leaflet.mobile.repository.impl.DummyEntryRepositoryImpl;
+import hu.psprog.leaflet.mobile.repository.impl.CategoryRepositoryImpl;
+import hu.psprog.leaflet.mobile.repository.impl.DocumentRepositoryImpl;
+import hu.psprog.leaflet.mobile.repository.impl.EntryRepositoryImpl;
 
 /**
  * Dagger Module configuration for repositories.
@@ -18,11 +18,11 @@ import hu.psprog.leaflet.mobile.repository.impl.DummyEntryRepositoryImpl;
 public abstract class RepositoryModule {
 
     @Binds
-    public abstract CategoryRepository bindCategoryRepository(DummyCategoryRepositoryImpl dummyCategoryRepository);
+    public abstract CategoryRepository bindCategoryRepository(CategoryRepositoryImpl dummyCategoryRepository);
 
     @Binds
-    public abstract DocumentRepository bindDocumentRepository(DummyDocumentRepositoryImpl dummyDocumentRepository);
+    public abstract DocumentRepository bindDocumentRepository(DocumentRepositoryImpl dummyDocumentRepository);
 
     @Binds
-    public abstract EntryRepository bindEntryRepository(DummyEntryRepositoryImpl dummyEntryRepository);
+    public abstract EntryRepository bindEntryRepository(EntryRepositoryImpl dummyEntryRepository);
 }

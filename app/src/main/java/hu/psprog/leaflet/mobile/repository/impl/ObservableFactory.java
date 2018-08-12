@@ -1,5 +1,6 @@
 package hu.psprog.leaflet.mobile.repository.impl;
 
+import android.util.Log;
 import io.reactivex.Observable;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -16,6 +17,8 @@ import java.io.Serializable;
  */
 @Singleton
 public class ObservableFactory {
+
+    private static final String LOG_TAG = ObservableFactory.class.getSimpleName();
 
     @Inject
     public ObservableFactory() {
@@ -41,12 +44,13 @@ public class ObservableFactory {
             try {
                 emitter.onNext(supplier.get());
             } catch (Exception exc) {
+                Log.e(LOG_TAG, "Failed to get result from API server", exc);
                 emitter.onError(exc);
             }
         };
     }
 
     interface BridgeResultSupplier<T> {
-        T get() throws Exception; // TODO change later to CommunicationFailureException
+        T get() throws Exception;
     }
 }
