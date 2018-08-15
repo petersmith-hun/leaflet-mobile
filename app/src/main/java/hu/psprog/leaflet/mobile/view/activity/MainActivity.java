@@ -24,13 +24,10 @@ import hu.psprog.leaflet.mobile.viewmodel.factory.DependencyInjectingViewModelFa
 import io.reactivex.disposables.CompositeDisposable;
 
 import javax.inject.Inject;
-import java.util.Deque;
-import java.util.LinkedList;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, EntryListFragment.OnEntryItemSelectedListener {
 
-    private static final int MAX_NUMBER_OF_STEPS_BACK = 5;
     private final CompositeDisposable disposables = new CompositeDisposable();
 
     @BindView(R.id.toolbar)
@@ -41,8 +38,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @BindView(R.id.nav_view)
     NavigationView navigationView;
-
-    private Deque<Fragment> previousFragments = new LinkedList<>();
 
     @Inject
     FragmentFactory fragmentFactory;
@@ -64,7 +59,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         navigationView.setNavigationItemSelectedListener(this);
         new NavigationMenuUpdater(this, viewModelFactory).updateMenu();
-        changeFragment(new EntryListFragment());
+        if (Objects.isNull(getSupportFragmentManager().findFragmentById(R.id.fragment_container))) {
+            changeFragment(new EntryListFragment(), false);
+        }
     }
 
     @Override
@@ -73,12 +70,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            Fragment previousFragment = previousFragments.poll();
-            if (Objects.isNull(previousFragment)) {
-                super.onBackPressed();
-            } else {
-                changeFragment(previousFragment, false);
-            }
+            super.onBackPressed();
         }
     }
 
@@ -128,21 +120,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         changeFragment(targetFragment, true);
     }
 
-    private void changeFragment(Fragment targetFragment, boolean shouldSaveFragment) {
-        if (shouldSaveFragment) {
-            saveCurrentFragment();
-        }
-        getSupportFragmentManager()
+    private void changeFragment(Fragment targetFragment, boolean addToBackStack) {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager()
                 .beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .replace(R.id.fragment_container, targetFragment)
-                .commit();
-    }
+                .replace(R.id.fragment_container, targetFragment);
 
-    private void saveCurrentFragment() {
-        previousFragments.push(getSupportFragmentManager().findFragmentById(R.id.fragment_container));
-        if (previousFragments.size() > MAX_NUMBER_OF_STEPS_BACK) {
-            previousFragments.pollLast();
+        if (addToBackStack) {
+            fragmentTransaction.addToBackStack(null);
         }
+
+        fragmentTransaction.commit();
     }
 }
