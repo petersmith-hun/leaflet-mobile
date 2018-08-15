@@ -49,11 +49,17 @@ public class SpannableConfigurationModule {
 
     private SpannableTheme configureTheme() {
         return SpannableTheme.builderWithDefaults(application)
+                .codeTextSize(getDimension(R.dimen.text_code_block))
+                .codeBlockTextColor(getColor(R.color.codeBlockText))
                 .codeBlockBackgroundColor(getColor(R.color.codeBlockBackground))
                 .build();
     }
 
     private int getColor(int colorID) {
         return application.getResources().getColor(colorID, null);
+    }
+
+    private int getDimension(int dimensionID) {
+        return application.getResources().getDimensionPixelSize(dimensionID);
     }
 }
