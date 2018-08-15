@@ -10,6 +10,7 @@ import hu.psprog.leaflet.mobile.R;
 import hu.psprog.leaflet.mobile.model.EntryDetails;
 import hu.psprog.leaflet.mobile.view.loader.impl.EntryDetailsPageContentLoader;
 import hu.psprog.leaflet.mobile.viewmodel.factory.DependencyInjectingViewModelFactory;
+import ru.noties.markwon.SpannableConfiguration;
 
 import javax.inject.Inject;
 
@@ -22,6 +23,9 @@ public class EntryDetailsFragment extends Fragment {
 
     @Inject
     DependencyInjectingViewModelFactory viewModelFactory;
+
+    @Inject
+    SpannableConfiguration spannableConfiguration;
 
     public static EntryDetailsFragment newInstance(String entryLink) {
 
@@ -43,7 +47,7 @@ public class EntryDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_entry_details, container, false);
-        new EntryDetailsPageContentLoader(this, view, viewModelFactory).loadContent();
+        new EntryDetailsPageContentLoader(this, view, viewModelFactory, spannableConfiguration).loadContent();
 
         return view;
     }

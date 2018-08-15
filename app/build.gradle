@@ -13,14 +13,16 @@ project.ext {
     commonsLangVersion = "3.7"
     archVersion = "1.1.1"
     leafletBridgeVersion = "3.0.0"
-    leafletRCPVersion = "1.2.0"
+    leafletRCPVersion = "1.2.1"
     slf4jVersion = "1.7.25"
     logbackAndroidVersion = "1.1.1-12"
+    markwonVersion = "1.1.0"
+    prism4jVersion = "1.1.0"
 }
 
 android {
     compileSdkVersion 27
-    buildToolsVersion "28.0.1"
+    buildToolsVersion "28.0.2"
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -68,6 +70,11 @@ dependencies {
     implementation "org.apache.commons:commons-lang3:$commonsLangVersion"
     implementation "org.slf4j:slf4j-api:$slf4jVersion"
     implementation "com.github.tony19:logback-android:$logbackAndroidVersion"
+    implementation "ru.noties:markwon:$markwonVersion"
+    implementation "ru.noties:markwon-image-loader:$markwonVersion"
+    implementation "ru.noties:markwon-syntax:$markwonVersion"
+    implementation "ru.noties:markwon-view:$markwonVersion"
+    implementation "ru.noties:prism4j:$prism4jVersion"
     implementation ("hu.psprog.leaflet:bridge-implementation:$leafletBridgeVersion") {
         exclude module: 'javax.inject'
     }
@@ -80,6 +87,7 @@ dependencies {
     annotationProcessor "com.jakewharton:butterknife-compiler:$butterknifeVersion"
     annotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
     annotationProcessor "com.google.dagger:dagger-android-processor:$daggerVersion"
+    annotationProcessor "ru.noties:prism4j-bundler:$prism4jVersion"
 
     // test dependencies
     testImplementation "junit:junit:$junitVersion"

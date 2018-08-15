@@ -8,6 +8,7 @@ import hu.psprog.leaflet.mobile.config.dagger.module.BridgeClientConfigurationMo
 import hu.psprog.leaflet.mobile.config.dagger.module.BridgeServiceConfigurationModule;
 import hu.psprog.leaflet.mobile.config.dagger.module.LeafletMobileApplicationModule;
 import hu.psprog.leaflet.mobile.config.dagger.module.RepositoryModule;
+import hu.psprog.leaflet.mobile.config.dagger.module.SpannableConfigurationModule;
 import hu.psprog.leaflet.mobile.config.dagger.module.ViewModelFactoryModule;
 
 import javax.inject.Singleton;
@@ -24,6 +25,7 @@ import javax.inject.Singleton;
         BridgeServiceConfigurationModule.class,
         LeafletMobileApplicationModule.class,
         RepositoryModule.class,
+        SpannableConfigurationModule.class,
         ViewModelFactoryModule.class})
 public interface LeafletMobileApplicationComponent extends AndroidInjector<LeafletMobileApplication> {
 }

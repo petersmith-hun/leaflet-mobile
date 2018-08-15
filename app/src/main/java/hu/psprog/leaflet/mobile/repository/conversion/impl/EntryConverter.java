@@ -27,7 +27,7 @@ public class EntryConverter implements Converter<WrapperBodyDataModel<ExtendedEn
         return EntryDetails.getBuilder()
                 .withAuthor(extendedEntryDataModel.getUser().getUsername())
                 .withTitle(extendedEntryDataModel.getTitle())
-                .withContent(extendedEntryDataModel.getContent())
+                .withContent(extendedEntryDataModel.getRawContent())
                 .withCreatedDate(extendedEntryDataModel.getCreated())
                 .build();
     }

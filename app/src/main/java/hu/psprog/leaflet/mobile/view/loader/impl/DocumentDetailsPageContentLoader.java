@@ -4,7 +4,6 @@ import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.support.v4.app.Fragment;
 import android.view.View;
-import android.webkit.WebView;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -14,11 +13,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import hu.psprog.leaflet.mobile.R;
 import hu.psprog.leaflet.mobile.model.DocumentDetails;
-import hu.psprog.leaflet.mobile.view.helper.HTMLRenderer;
 import hu.psprog.leaflet.mobile.view.loader.AbstractDefaultContentLoader;
 import hu.psprog.leaflet.mobile.view.loader.AbstractPageableContentLoader;
 import hu.psprog.leaflet.mobile.viewmodel.DocumentDetailsViewModel;
 import io.reactivex.Observable;
+import ru.noties.markwon.Markwon;
+import ru.noties.markwon.SpannableConfiguration;
 
 import java.util.Optional;
 
@@ -32,13 +32,13 @@ public class DocumentDetailsPageContentLoader extends AbstractDefaultContentLoad
     public static final String ARG_DOCUMENT_LINK = "document_link";
 
     private DocumentDetailsViewModel documentDetailsViewModel;
-    private HTMLRenderer htmlRenderer;
+    private SpannableConfiguration spannableConfiguration;
 
     @BindView(R.id.documentTitle)
     TextView documentTitleTextView;
 
     @BindView(R.id.documentContent)
-    WebView contentWebView;
+    TextView contentTextView;
 
     @BindView(R.id.documentDetailsScrollView)
     ScrollView scrollView;
@@ -49,11 +49,11 @@ public class DocumentDetailsPageContentLoader extends AbstractDefaultContentLoad
     @BindString(R.string.exceptionMessageLinkNotSpecified)
     String exceptionMessageLinkNotSpecified;
 
-    public DocumentDetailsPageContentLoader(Fragment fragment, View view, ViewModelProvider.Factory viewModelFactory) {
+    public DocumentDetailsPageContentLoader(Fragment fragment, View view, ViewModelProvider.Factory viewModelFactory, SpannableConfiguration spannableConfiguration) {
         super(fragment, view);
+        this.spannableConfiguration = spannableConfiguration;
         ButterKnife.bind(this, getView());
         documentDetailsViewModel = ViewModelProviders.of(getFragment(), viewModelFactory).get(DocumentDetailsViewModel.class);
-        htmlRenderer = new HTMLRenderer(view);
     }
 
     @Override
@@ -72,7 +72,7 @@ public class DocumentDetailsPageContentLoader extends AbstractDefaultContentLoad
     @Override
     protected void handleSuccess(DocumentDetails response) {
         documentTitleTextView.setText(response.getTitle());
-        htmlRenderer.render(contentWebView, response.getContent());
+        Markwon.setMarkdown(contentTextView, spannableConfiguration, response.getContent());
         progressBar.setVisibility(View.GONE);
         scrollView.setVisibility(View.VISIBLE);
     }
