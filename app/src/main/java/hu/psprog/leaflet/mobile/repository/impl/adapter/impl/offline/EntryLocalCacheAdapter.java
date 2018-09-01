@@ -8,6 +8,7 @@ import hu.psprog.leaflet.mobile.model.OrderDirection;
 import hu.psprog.leaflet.mobile.repository.impl.adapter.EntryAdapter;
 import hu.psprog.leaflet.mobile.repository.impl.adapter.impl.offline.room.dao.EntryDAO;
 import hu.psprog.leaflet.mobile.repository.impl.adapter.impl.offline.room.database.LeafletLocalCacheDatabase;
+import hu.psprog.leaflet.mobile.repository.impl.adapter.impl.offline.room.helper.EntrySummaryPageCacheReadHelper;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -20,10 +21,12 @@ import java.util.Optional;
 public class EntryLocalCacheAdapter implements EntryAdapter {
 
     private EntryDAO entryDAO;
+    private EntrySummaryPageCacheReadHelper entrySummaryPageCacheReadHelper;
 
     @Inject
-    public EntryLocalCacheAdapter(LeafletLocalCacheDatabase leafletLocalCacheDatabase) {
+    public EntryLocalCacheAdapter(LeafletLocalCacheDatabase leafletLocalCacheDatabase, EntrySummaryPageCacheReadHelper entrySummaryPageCacheReadHelper) {
         this.entryDAO = leafletLocalCacheDatabase.entryDAO();
+        this.entrySummaryPageCacheReadHelper = entrySummaryPageCacheReadHelper;
     }
 
     @Override
@@ -33,11 +36,11 @@ public class EntryLocalCacheAdapter implements EntryAdapter {
 
     @Override
     public EntrySummaryPage getPageOfEntries(int page, int limit, OrderBy.Entry orderBy, OrderDirection orderDirection) {
-        return null;
+        return entrySummaryPageCacheReadHelper.getPage(page, 0);
     }
 
     @Override
     public EntrySummaryPage getPageOfEntriesByCategory(int page, int limit, OrderBy.Entry orderBy, OrderDirection orderDirection, Category category) {
-        return null;
+        return entrySummaryPageCacheReadHelper.getPage(page, category.getId());
     }
 }

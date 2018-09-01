@@ -52,10 +52,10 @@ public class EntryPageTransformer {
                 .build();
     }
 
-    private Long extractCategoryID(Category category) {
+    private long extractCategoryID(Category category) {
         return Optional.ofNullable(category)
                 .map(Category::getId)
-                .orElse(null);
+                .orElse(0L);
     }
 
     private List<EntrySummary> extractEntrySummaries(WrapperBodyDataModel<EntryListDataModel> source) {

@@ -17,8 +17,6 @@ public interface EntryDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(EntryDetails entryDetails);
 
-    @Query("select * from cache_entry_details where link = :link")
+    @Query("select * from cache_entry_details where link = :link;")
     Optional<EntryDetails> findEntry(String link);
-
-
 }

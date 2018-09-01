@@ -32,7 +32,7 @@ public class EntrySummaryPage implements Serializable {
     @ForeignKey(entity = Category.class,
             parentColumns = DatabaseConstants.FIELD_ID,
             childColumns = DatabaseConstants.FIELD_CATEGORY_ID)
-    private Long categoryID;
+    private long categoryID;
 
     @NonNull
     @ColumnInfo(name = DatabaseConstants.FIELD_PAGE)
@@ -48,7 +48,7 @@ public class EntrySummaryPage implements Serializable {
         return entrySummaryList;
     }
 
-    public Long getCategoryID() {
+    public long getCategoryID() {
         return categoryID;
     }
 
@@ -64,7 +64,7 @@ public class EntrySummaryPage implements Serializable {
         return hasNext;
     }
 
-    public void setCategoryID(Long categoryID) {
+    public void setCategoryID(long categoryID) {
         this.categoryID = categoryID;
     }
 
@@ -128,7 +128,7 @@ public class EntrySummaryPage implements Serializable {
      */
     public static final class EntrySummaryPageBuilder {
         private List<EntrySummary> entrySummaryList;
-        private Long categoryID;
+        private long categoryID;
         private int page;
         private boolean hasPrevious;
         private boolean hasNext;
@@ -141,7 +141,7 @@ public class EntrySummaryPage implements Serializable {
             return this;
         }
 
-        public EntrySummaryPageBuilder withCategoryID(Long categoryID) {
+        public EntrySummaryPageBuilder withCategoryID(long categoryID) {
             this.categoryID = categoryID;
             return this;
         }

@@ -4,7 +4,7 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
-import hu.psprog.leaflet.mobile.model.Category;
+import hu.psprog.leaflet.mobile.model.EntrySummary;
 
 import java.util.List;
 
@@ -12,11 +12,11 @@ import java.util.List;
  * @author Peter Smith
  */
 @Dao
-public interface CategoryDAO {
+public interface EntrySummaryDAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<Category> categoryList);
+    void insertAll(List<EntrySummary> entrySummaryList);
 
-    @Query("select * from cache_categories;")
-    List<Category> getAllCategories();
+    @Query("select * from cache_entry_summaries where link = :link;")
+    EntrySummary findEntrySummary(String link);
 }

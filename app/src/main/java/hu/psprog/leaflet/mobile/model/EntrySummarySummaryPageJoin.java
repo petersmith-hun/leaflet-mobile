@@ -23,7 +23,7 @@ public class EntrySummarySummaryPageJoin {
     @NonNull
     @ColumnInfo(name = DatabaseConstants.FIELD_CATEGORY_ID)
     @ForeignKey(entity = Category.class, parentColumns = DatabaseConstants.FIELD_ID, childColumns = DatabaseConstants.FIELD_CATEGORY_ID)
-    private Long categoryID;
+    private long categoryID;
 
     @NonNull
     @ColumnInfo(name = DatabaseConstants.FIELD_PAGE)
@@ -34,7 +34,7 @@ public class EntrySummarySummaryPageJoin {
     @ForeignKey(entity = EntrySummary.class, parentColumns = DatabaseConstants.FIELD_LINK, childColumns = DatabaseConstants.FIELD_LINK)
     private String link;
 
-    public Long getCategoryID() {
+    public long getCategoryID() {
         return categoryID;
     }
 
@@ -46,7 +46,7 @@ public class EntrySummarySummaryPageJoin {
         return link;
     }
 
-    public void setCategoryID(Long categoryID) {
+    public void setCategoryID(long categoryID) {
         this.categoryID = categoryID;
     }
 
@@ -99,14 +99,14 @@ public class EntrySummarySummaryPageJoin {
      * Builder for {@link EntrySummarySummaryPageJoin}.
      */
     public static final class EntrySummarySummaryPageJoinBuilder {
-        private Long categoryID;
+        private long categoryID;
         private int page;
         private String link;
 
         private EntrySummarySummaryPageJoinBuilder() {
         }
 
-        public EntrySummarySummaryPageJoinBuilder withCategoryID(Long categoryID) {
+        public EntrySummarySummaryPageJoinBuilder withCategoryID(long categoryID) {
             this.categoryID = categoryID;
             return this;
         }

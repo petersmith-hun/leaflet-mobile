@@ -11,6 +11,7 @@ import hu.psprog.leaflet.mobile.model.EntrySummarySummaryPageJoin;
 import hu.psprog.leaflet.mobile.repository.impl.adapter.impl.offline.room.dao.CategoryDAO;
 import hu.psprog.leaflet.mobile.repository.impl.adapter.impl.offline.room.dao.DocumentDAO;
 import hu.psprog.leaflet.mobile.repository.impl.adapter.impl.offline.room.dao.EntryDAO;
+import hu.psprog.leaflet.mobile.repository.impl.adapter.impl.offline.room.dao.EntrySummaryDAO;
 import hu.psprog.leaflet.mobile.repository.impl.adapter.impl.offline.room.dao.EntrySummaryPageDAO;
 
 /**
@@ -32,6 +33,8 @@ public abstract class LeafletLocalCacheDatabase extends RoomDatabase {
     public abstract DocumentDAO documentDAO();
 
     public abstract EntryDAO entryDAO();
+
+    public abstract EntrySummaryDAO entrySummaryDAO();
 
     public abstract EntrySummaryPageDAO entrySummaryPageDAO();
 }

@@ -17,6 +17,6 @@ public interface DocumentDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(DocumentDetails documentDetails);
 
-    @Query("select * from cache_document_details where link = :link")
+    @Query("select * from cache_document_details where link = :link;")
     Optional<DocumentDetails> findDocument(String link);
 }
