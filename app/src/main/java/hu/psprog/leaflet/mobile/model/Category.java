@@ -1,5 +1,9 @@
 package hu.psprog.leaflet.mobile.model;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -9,9 +13,15 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  *
  * @author Peter Smith
  */
+@Entity(tableName = DatabaseConstants.TABLE_CATEGORIES)
 public class Category {
 
+    @NonNull
+    @PrimaryKey
+    @ColumnInfo(name = DatabaseConstants.FIELD_ID)
     private long id;
+
+    @ColumnInfo(name = DatabaseConstants.FIELD_NAME)
     private String name;
 
     public long getId() {
@@ -20,6 +30,14 @@ public class Category {
 
     public String getName() {
         return name;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override

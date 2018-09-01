@@ -1,12 +1,16 @@
 package hu.psprog.leaflet.mobile.model;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Ignore;
+import android.support.annotation.NonNull;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Model for a list of entries with necessary paging information.
@@ -14,20 +18,38 @@ import java.util.Optional;
  *
  * @author Peter Smith
  */
+@Entity(tableName = DatabaseConstants.TABLE_ENTRY_SUMMARY_PAGES,
+        primaryKeys = {
+                DatabaseConstants.FIELD_CATEGORY_ID,
+                DatabaseConstants.FIELD_PAGE})
 public class EntrySummaryPage implements Serializable {
 
+    @Ignore
     private List<EntrySummary> entrySummaryList;
-    private Optional<Category> category;
+
+    @NonNull
+    @ColumnInfo(name = DatabaseConstants.FIELD_CATEGORY_ID)
+    @ForeignKey(entity = Category.class,
+            parentColumns = DatabaseConstants.FIELD_ID,
+            childColumns = DatabaseConstants.FIELD_CATEGORY_ID)
+    private Long categoryID;
+
+    @NonNull
+    @ColumnInfo(name = DatabaseConstants.FIELD_PAGE)
     private int page;
+
+    @ColumnInfo(name = DatabaseConstants.FIELD_HAS_PREVIOUS)
     private boolean hasPrevious;
+
+    @ColumnInfo(name = DatabaseConstants.FIELD_HAS_NEXT)
     private boolean hasNext;
 
     public List<EntrySummary> getEntrySummaryList() {
         return entrySummaryList;
     }
 
-    public Optional<Category> getCategory() {
-        return category;
+    public Long getCategoryID() {
+        return categoryID;
     }
 
     public int getPage() {
@@ -40,6 +62,22 @@ public class EntrySummaryPage implements Serializable {
 
     public boolean hasNext() {
         return hasNext;
+    }
+
+    public void setCategoryID(Long categoryID) {
+        this.categoryID = categoryID;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
+    }
+
+    public void setHasPrevious(boolean hasPrevious) {
+        this.hasPrevious = hasPrevious;
+    }
+
+    public void setHasNext(boolean hasNext) {
+        this.hasNext = hasNext;
     }
 
     @Override
@@ -55,7 +93,7 @@ public class EntrySummaryPage implements Serializable {
                 .append(hasPrevious, that.hasPrevious)
                 .append(hasNext, that.hasNext)
                 .append(entrySummaryList, that.entrySummaryList)
-                .append(category, that.category)
+                .append(categoryID, that.categoryID)
                 .isEquals();
     }
 
@@ -63,7 +101,7 @@ public class EntrySummaryPage implements Serializable {
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
                 .append(entrySummaryList)
-                .append(category)
+                .append(categoryID)
                 .append(page)
                 .append(hasPrevious)
                 .append(hasNext)
@@ -74,7 +112,7 @@ public class EntrySummaryPage implements Serializable {
     public String toString() {
         return new ToStringBuilder(this)
                 .append("entrySummaryList", entrySummaryList)
-                .append("category", category)
+                .append("categoryID", categoryID)
                 .append("page", page)
                 .append("hasPrevious", hasPrevious)
                 .append("hasNext", hasNext)
@@ -90,7 +128,7 @@ public class EntrySummaryPage implements Serializable {
      */
     public static final class EntrySummaryPageBuilder {
         private List<EntrySummary> entrySummaryList;
-        private Optional<Category> category = Optional.empty();
+        private Long categoryID;
         private int page;
         private boolean hasPrevious;
         private boolean hasNext;
@@ -103,8 +141,8 @@ public class EntrySummaryPage implements Serializable {
             return this;
         }
 
-        public EntrySummaryPageBuilder withCategory(Category category) {
-            this.category = Optional.ofNullable(category);
+        public EntrySummaryPageBuilder withCategoryID(Long categoryID) {
+            this.categoryID = categoryID;
             return this;
         }
 
@@ -125,7 +163,7 @@ public class EntrySummaryPage implements Serializable {
 
         public EntrySummaryPage build() {
             EntrySummaryPage entrySummaryPage = new EntrySummaryPage();
-            entrySummaryPage.category = this.category;
+            entrySummaryPage.categoryID = this.categoryID;
             entrySummaryPage.page = this.page;
             entrySummaryPage.hasPrevious = this.hasPrevious;
             entrySummaryPage.hasNext = this.hasNext;

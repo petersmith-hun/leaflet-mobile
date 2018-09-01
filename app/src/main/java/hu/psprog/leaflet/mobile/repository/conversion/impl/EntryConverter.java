@@ -25,6 +25,7 @@ public class EntryConverter implements Converter<WrapperBodyDataModel<ExtendedEn
 
         ExtendedEntryDataModel extendedEntryDataModel = source.getBody();
         return EntryDetails.getBuilder()
+                .withLink(source.getBody().getLink())
                 .withAuthor(extendedEntryDataModel.getUser().getUsername())
                 .withTitle(extendedEntryDataModel.getTitle())
                 .withContent(extendedEntryDataModel.getRawContent())

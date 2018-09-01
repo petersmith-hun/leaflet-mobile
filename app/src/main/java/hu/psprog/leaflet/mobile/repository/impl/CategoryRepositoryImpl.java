@@ -1,14 +1,14 @@
 package hu.psprog.leaflet.mobile.repository.impl;
 
-import hu.psprog.leaflet.api.rest.response.category.CategoryListDataModel;
-import hu.psprog.leaflet.bridge.service.CategoryBridgeService;
 import hu.psprog.leaflet.mobile.model.CategoryList;
 import hu.psprog.leaflet.mobile.repository.CategoryRepository;
-import hu.psprog.leaflet.mobile.repository.conversion.impl.CategoryListConverter;
+import hu.psprog.leaflet.mobile.repository.impl.adapter.impl.offline.CategoryLocalCacheAdapter;
+import hu.psprog.leaflet.mobile.repository.impl.adapter.impl.online.caching.CachingCategoryNetworkRequestAdapter;
 import io.reactivex.Observable;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.util.function.Predicate;
 
 /**
  * Implementation of {@link CategoryRepository}.
@@ -18,23 +18,25 @@ import javax.inject.Singleton;
 @Singleton
 public class CategoryRepositoryImpl implements CategoryRepository {
 
-    private ObservableFactory observableFactory;
-    private CategoryBridgeService categoryBridgeService;
-    private CategoryListConverter categoryListConverter;
+    private static final Predicate<CategoryList> CATEGORY_LIST_FALLBACK_PREDICATE = categoryList -> categoryList.getCategories().isEmpty();
+
+    private OfflineFirstCallFactory offlineFirstCallFactory;
+    private CategoryLocalCacheAdapter categoryLocalCacheAdapter;
+    private CachingCategoryNetworkRequestAdapter cachingCategoryNetworkRequestAdapter;
 
     @Inject
-    public CategoryRepositoryImpl(ObservableFactory observableFactory, CategoryBridgeService categoryBridgeService,
-                                  CategoryListConverter categoryListConverter) {
-        this.observableFactory = observableFactory;
-        this.categoryBridgeService = categoryBridgeService;
-        this.categoryListConverter = categoryListConverter;
+    public CategoryRepositoryImpl(OfflineFirstCallFactory offlineFirstCallFactory, CategoryLocalCacheAdapter categoryLocalCacheAdapter,
+                                  CachingCategoryNetworkRequestAdapter cachingCategoryNetworkRequestAdapter) {
+        this.offlineFirstCallFactory = offlineFirstCallFactory;
+        this.categoryLocalCacheAdapter = categoryLocalCacheAdapter;
+        this.cachingCategoryNetworkRequestAdapter = cachingCategoryNetworkRequestAdapter;
     }
 
     @Override
     public Observable<CategoryList> getPublicCategories() {
-        return observableFactory.create(() -> {
-            CategoryListDataModel response = categoryBridgeService.getPublicCategories();
-            return categoryListConverter.convert(response);
-        });
+        return offlineFirstCallFactory.create(
+                () -> categoryLocalCacheAdapter.getPublicCategories(),
+                () -> cachingCategoryNetworkRequestAdapter.getPublicCategories(),
+                CATEGORY_LIST_FALLBACK_PREDICATE);
     }
 }

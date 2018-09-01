@@ -1,11 +1,9 @@
 package hu.psprog.leaflet.mobile.repository.impl;
 
-import hu.psprog.leaflet.api.rest.response.common.WrapperBodyDataModel;
-import hu.psprog.leaflet.api.rest.response.document.DocumentDataModel;
-import hu.psprog.leaflet.bridge.service.DocumentBridgeService;
 import hu.psprog.leaflet.mobile.model.DocumentDetails;
 import hu.psprog.leaflet.mobile.repository.DocumentRepository;
-import hu.psprog.leaflet.mobile.repository.conversion.impl.DocumentConverter;
+import hu.psprog.leaflet.mobile.repository.impl.adapter.impl.offline.DocumentLocalCacheAdapter;
+import hu.psprog.leaflet.mobile.repository.impl.adapter.impl.online.caching.CachingDocumentNetworkRequestAdapter;
 import io.reactivex.Observable;
 
 import javax.inject.Inject;
@@ -19,23 +17,22 @@ import javax.inject.Singleton;
 @Singleton
 public class DocumentRepositoryImpl implements DocumentRepository {
 
-    private ObservableFactory observableFactory;
-    private DocumentBridgeService documentBridgeService;
-    private DocumentConverter documentConverter;
+    private OfflineFirstCallFactory offlineFirstCallFactory;
+    private DocumentLocalCacheAdapter documentLocalCacheAdapter;
+    private CachingDocumentNetworkRequestAdapter cachingDocumentNetworkRequestAdapter;
 
     @Inject
-    public DocumentRepositoryImpl(ObservableFactory observableFactory, DocumentBridgeService documentBridgeService,
-                                  DocumentConverter documentConverter) {
-        this.observableFactory = observableFactory;
-        this.documentBridgeService = documentBridgeService;
-        this.documentConverter = documentConverter;
+    public DocumentRepositoryImpl(OfflineFirstCallFactory offlineFirstCallFactory, DocumentLocalCacheAdapter documentLocalCacheAdapter,
+                                  CachingDocumentNetworkRequestAdapter cachingDocumentNetworkRequestAdapter) {
+        this.offlineFirstCallFactory = offlineFirstCallFactory;
+        this.documentLocalCacheAdapter = documentLocalCacheAdapter;
+        this.cachingDocumentNetworkRequestAdapter = cachingDocumentNetworkRequestAdapter;
     }
 
     @Override
     public Observable<DocumentDetails> getDocument(String link) {
-        return observableFactory.create(() -> {
-            WrapperBodyDataModel<DocumentDataModel> response = documentBridgeService.getDocumentByLink(link);
-            return documentConverter.convert(response);
-        });
+        return offlineFirstCallFactory.createStrict(
+                () -> documentLocalCacheAdapter.getDocument(link),
+                () -> cachingDocumentNetworkRequestAdapter.getDocument(link));
     }
 }

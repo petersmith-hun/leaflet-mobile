@@ -21,14 +21,11 @@ import hu.psprog.leaflet.mobile.view.fragment.EntryListFragment;
 import hu.psprog.leaflet.mobile.view.helper.FragmentFactory;
 import hu.psprog.leaflet.mobile.view.helper.NavigationMenuUpdater;
 import hu.psprog.leaflet.mobile.viewmodel.factory.DependencyInjectingViewModelFactory;
-import io.reactivex.disposables.CompositeDisposable;
 
 import javax.inject.Inject;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, EntryListFragment.OnEntryItemSelectedListener {
-
-    private final CompositeDisposable disposables = new CompositeDisposable();
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -104,12 +101,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onListFragmentInteraction(EntrySummary item) {
         changeFragment(EntryDetailsFragment.newInstance(item.getLink()));
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        disposables.clear();
     }
 
     private ActionBarDrawerToggle getToggle() {

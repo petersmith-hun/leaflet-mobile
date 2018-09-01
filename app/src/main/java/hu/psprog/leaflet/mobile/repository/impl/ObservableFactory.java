@@ -28,18 +28,18 @@ public class ObservableFactory {
      * Wraps a call in an emitter based observable.
      * If an exception is thrown, the emitter will send an error event.
      *
-     * @param supplier service call as {@link BridgeResultSupplier}
+     * @param supplier service call as {@link ExceptionThrowingSupplier}
      * @param <T> return type of the service call (must be {@link Serializable})
      * @return created {@link Observable}
      */
-    <T extends Serializable> Observable<T> create(BridgeResultSupplier<T> supplier) {
+    <T extends Serializable> Observable<T> create(ExceptionThrowingSupplier<T> supplier) {
         return Observable
                 .create(createEmitter(supplier))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    private <T extends Serializable> ObservableOnSubscribe<T> createEmitter(BridgeResultSupplier<T> supplier) {
+    private <T extends Serializable> ObservableOnSubscribe<T> createEmitter(ExceptionThrowingSupplier<T> supplier) {
         return emitter -> {
             try {
                 emitter.onNext(supplier.get());
@@ -50,7 +50,7 @@ public class ObservableFactory {
         };
     }
 
-    interface BridgeResultSupplier<T> {
+    interface ExceptionThrowingSupplier<T> {
         T get() throws Exception;
     }
 }
