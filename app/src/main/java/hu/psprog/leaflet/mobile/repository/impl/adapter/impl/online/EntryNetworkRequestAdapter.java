@@ -12,6 +12,7 @@ import hu.psprog.leaflet.mobile.model.OrderDirection;
 import hu.psprog.leaflet.mobile.repository.conversion.impl.EntryConverter;
 import hu.psprog.leaflet.mobile.repository.conversion.impl.EntryPageTransformer;
 import hu.psprog.leaflet.mobile.repository.impl.adapter.EntryAdapter;
+import hu.psprog.leaflet.mobile.util.logging.LogUtility;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -25,6 +26,8 @@ import java.util.Optional;
  */
 @Singleton
 public class EntryNetworkRequestAdapter extends BridgeCallerNetworkRequestAdapter implements EntryAdapter {
+
+    private static final String LOG_TAG = "entry_adapter::online";
 
     private EntryBridgeService entryBridgeService;
     private EntryConverter entryConverter;
@@ -41,6 +44,7 @@ public class EntryNetworkRequestAdapter extends BridgeCallerNetworkRequestAdapte
     public Optional<EntryDetails> getEntry(String link) {
 
         return Optional.ofNullable(callBridge(() -> {
+            LogUtility.debug(LOG_TAG, "Requesting entry '%s' from API service", link);
             WrapperBodyDataModel<ExtendedEntryDataModel> response = entryBridgeService.getEntryByLink(link);
             return entryConverter.convert(response);
         }));
@@ -50,6 +54,7 @@ public class EntryNetworkRequestAdapter extends BridgeCallerNetworkRequestAdapte
     public EntrySummaryPage getPageOfEntries(int page, int limit, OrderBy.Entry orderBy, OrderDirection orderDirection) {
 
         return callBridge(() -> {
+            LogUtility.debug(LOG_TAG, "Requesting summary page #%d from API service", page);
             WrapperBodyDataModel<EntryListDataModel> response = entryBridgeService
                     .getPageOfPublicEntries(page, limit, mapOrderBy(orderBy), mapOrderDirection(orderDirection));
             return entryPageTransformer.transform(response);
@@ -60,6 +65,7 @@ public class EntryNetworkRequestAdapter extends BridgeCallerNetworkRequestAdapte
     public EntrySummaryPage getPageOfEntriesByCategory(int page, int limit, OrderBy.Entry orderBy, OrderDirection orderDirection, Category category) {
 
         return callBridge(() -> {
+            LogUtility.debug(LOG_TAG, "Requesting summary page #%d for category #%d from API service", page, category.getId());
             WrapperBodyDataModel<EntryListDataModel> response = entryBridgeService
                     .getPageOfPublicEntriesByCategory(category.getId(), page, limit, mapOrderBy(orderBy), mapOrderDirection(orderDirection));
             return entryPageTransformer.transform(response, category);

@@ -6,6 +6,7 @@ import hu.psprog.leaflet.bridge.service.DocumentBridgeService;
 import hu.psprog.leaflet.mobile.model.DocumentDetails;
 import hu.psprog.leaflet.mobile.repository.conversion.impl.DocumentConverter;
 import hu.psprog.leaflet.mobile.repository.impl.adapter.DocumentAdapter;
+import hu.psprog.leaflet.mobile.util.logging.LogUtility;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -20,6 +21,8 @@ import java.util.Optional;
 @Singleton
 public class DocumentNetworkRequestAdapter extends BridgeCallerNetworkRequestAdapter implements DocumentAdapter {
 
+    private static final String LOG_TAG = "document_adapter::online";
+
     private DocumentBridgeService documentBridgeService;
     private DocumentConverter documentConverter;
 
@@ -33,6 +36,7 @@ public class DocumentNetworkRequestAdapter extends BridgeCallerNetworkRequestAda
     public Optional<DocumentDetails> getDocument(String link) {
 
         return Optional.ofNullable(callBridge(() -> {
+            LogUtility.debug(LOG_TAG, "Requesting document '%s' from API service", link);
             WrapperBodyDataModel<DocumentDataModel> response = documentBridgeService.getDocumentByLink(link);
             return documentConverter.convert(response);
         }));
