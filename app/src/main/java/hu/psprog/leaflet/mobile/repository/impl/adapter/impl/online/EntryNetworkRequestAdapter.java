@@ -18,6 +18,9 @@ import javax.inject.Singleton;
 import java.util.Optional;
 
 /**
+ * {@link EntryAdapter} implementation for online data sources.
+ * This implementation retrieves data from Leaflet backend via Bridge.
+ *
  * @author Peter Smith
  */
 @Singleton
@@ -45,6 +48,7 @@ public class EntryNetworkRequestAdapter extends BridgeCallerNetworkRequestAdapte
 
     @Override
     public EntrySummaryPage getPageOfEntries(int page, int limit, OrderBy.Entry orderBy, OrderDirection orderDirection) {
+
         return callBridge(() -> {
             WrapperBodyDataModel<EntryListDataModel> response = entryBridgeService
                     .getPageOfPublicEntries(page, limit, mapOrderBy(orderBy), mapOrderDirection(orderDirection));
@@ -54,6 +58,7 @@ public class EntryNetworkRequestAdapter extends BridgeCallerNetworkRequestAdapte
 
     @Override
     public EntrySummaryPage getPageOfEntriesByCategory(int page, int limit, OrderBy.Entry orderBy, OrderDirection orderDirection, Category category) {
+
         return callBridge(() -> {
             WrapperBodyDataModel<EntryListDataModel> response = entryBridgeService
                     .getPageOfPublicEntriesByCategory(category.getId(), page, limit, mapOrderBy(orderBy), mapOrderDirection(orderDirection));

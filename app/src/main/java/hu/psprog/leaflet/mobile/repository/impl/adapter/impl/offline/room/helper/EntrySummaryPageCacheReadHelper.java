@@ -14,6 +14,8 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
+ * Helper class for reading up cached data from the Room-based caching solution.
+ *
  * @author Peter Smith
  */
 @Singleton
@@ -28,6 +30,14 @@ public class EntrySummaryPageCacheReadHelper {
         this.entrySummaryPageDAO = leafletLocalCacheDatabase.entrySummaryPageDAO();
     }
 
+    /**
+     * Retrieves stored {@link EntrySummaryPage} for the given page number and category.
+     * To retrieve a non-category-filtered page, specify 0 as category ID.
+     *
+     * @param page page number
+     * @param categoryID category ID for category-filtered pages, 0 to return non-filtered page
+     * @return stored {@link EntrySummaryPage} if exists, otherwise {@code null}
+     */
     public EntrySummaryPage getPage(int page, long categoryID) {
 
         return entrySummaryPageDAO.findEntrySummaryPage(page, categoryID)

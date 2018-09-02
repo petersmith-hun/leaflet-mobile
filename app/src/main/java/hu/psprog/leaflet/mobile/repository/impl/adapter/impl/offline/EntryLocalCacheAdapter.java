@@ -15,6 +15,9 @@ import javax.inject.Singleton;
 import java.util.Optional;
 
 /**
+ * {@link EntryAdapter} implementation for offline data sources.
+ * This implementation retrieves data from Room-based local caching solution.
+ *
  * @author Peter Smith
  */
 @Singleton

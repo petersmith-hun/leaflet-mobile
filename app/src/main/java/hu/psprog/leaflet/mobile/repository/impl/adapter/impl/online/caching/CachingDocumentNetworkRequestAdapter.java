@@ -11,6 +11,8 @@ import javax.inject.Singleton;
 import java.util.Optional;
 
 /**
+ * {@link DocumentAdapter} implementation to store an online call's response in the local cache.
+ *
  * @author Peter Smith
  */
 @Singleton

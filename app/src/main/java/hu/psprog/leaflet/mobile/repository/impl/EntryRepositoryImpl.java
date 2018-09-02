@@ -47,14 +47,14 @@ public class EntryRepositoryImpl implements EntryRepository {
     @Override
     public Observable<EntrySummaryPage> getPageOfEntries(int page) {
         return offlineFirstCallFactory.create(
-                () -> null,
+                () -> entryLocalCacheAdapter.getPageOfEntries(page, DEFAULT_LIMIT, DEFAULT_ORDER_BY, DEFAULT_ORDER_DIRECTION),
                 () -> cachingEntryNetworkRequestAdapter.getPageOfEntries(page, DEFAULT_LIMIT, DEFAULT_ORDER_BY, DEFAULT_ORDER_DIRECTION));
     }
 
     @Override
     public Observable<EntrySummaryPage> getPageOfEntriesByCategory(int page, Category category) {
         return offlineFirstCallFactory.create(
-                () -> null,
+                () -> entryLocalCacheAdapter.getPageOfEntriesByCategory(page, DEFAULT_LIMIT, DEFAULT_ORDER_BY, DEFAULT_ORDER_DIRECTION, category),
                 () -> cachingEntryNetworkRequestAdapter.getPageOfEntriesByCategory(page, DEFAULT_LIMIT, DEFAULT_ORDER_BY, DEFAULT_ORDER_DIRECTION, category));
     }
 }

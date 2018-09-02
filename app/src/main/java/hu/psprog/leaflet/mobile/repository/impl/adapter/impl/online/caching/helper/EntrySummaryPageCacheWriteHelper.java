@@ -11,6 +11,8 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 /**
+ * Helper class for storing a response in the local cache.
+ *
  * @author Peter Smith
  */
 @Singleton
@@ -25,6 +27,16 @@ public class EntrySummaryPageCacheWriteHelper {
         this.entrySummaryPageDAO = leafletLocalCacheDatabase.entrySummaryPageDAO();
     }
 
+    /**
+     * Stores given {@link EntrySummaryPage} in the local cache.
+     *
+     * Steps done by the implementation:
+     *  1) Stores the entry summaries appear in this summary page.
+     *  2) Stores summary page meta information.
+     *  3) Creates join entries between summary and summary page records.
+     *
+     * @param entrySummaryPage {@link EntrySummaryPage} to store
+     */
     public void storePage(EntrySummaryPage entrySummaryPage) {
         saveSummaryList(entrySummaryPage);
         saveSummaryPageMetaInfo(entrySummaryPage);

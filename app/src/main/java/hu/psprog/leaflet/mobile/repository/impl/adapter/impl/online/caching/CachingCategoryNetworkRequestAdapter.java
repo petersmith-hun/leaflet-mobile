@@ -10,6 +10,8 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 /**
+ * {@link CategoryAdapter} implementation to store an online call's response in the local cache.
+ *
  * @author Peter Smith
  */
 @Singleton

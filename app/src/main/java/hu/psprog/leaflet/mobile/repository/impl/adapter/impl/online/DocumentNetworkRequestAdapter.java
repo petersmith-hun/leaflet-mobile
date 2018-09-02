@@ -12,6 +12,9 @@ import javax.inject.Singleton;
 import java.util.Optional;
 
 /**
+ * {@link DocumentAdapter} implementation for online data sources.
+ * This implementation retrieves data from Leaflet backend via Bridge.
+ *
  * @author Peter Smith
  */
 @Singleton

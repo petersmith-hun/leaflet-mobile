@@ -10,6 +10,9 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 /**
+ * {@link CategoryAdapter} implementation for online data sources.
+ * This implementation retrieves data from Leaflet backend via Bridge.
+ *
  * @author Peter Smith
  */
 @Singleton

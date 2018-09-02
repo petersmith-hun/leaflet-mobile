@@ -15,6 +15,8 @@ import hu.psprog.leaflet.mobile.repository.impl.adapter.impl.offline.room.dao.En
 import hu.psprog.leaflet.mobile.repository.impl.adapter.impl.offline.room.dao.EntrySummaryPageDAO;
 
 /**
+ * Room database descriptor class.
+ *
  * @author Peter Smith
  */
 @Database(version = 1,
