@@ -4,9 +4,9 @@ import hu.psprog.leaflet.mobile.model.CategoryList;
 import hu.psprog.leaflet.mobile.repository.impl.adapter.CategoryAdapter;
 import hu.psprog.leaflet.mobile.repository.impl.adapter.impl.offline.room.dao.CategoryDAO;
 import hu.psprog.leaflet.mobile.repository.impl.adapter.impl.offline.room.database.LeafletLocalCacheDatabase;
-import hu.psprog.leaflet.mobile.repository.impl.adapter.impl.online.CategoryNetworkRequestAdapter;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 /**
@@ -17,11 +17,12 @@ import javax.inject.Singleton;
 @Singleton
 public class CachingCategoryNetworkRequestAdapter implements CategoryAdapter {
 
-    private CategoryNetworkRequestAdapter categoryNetworkRequestAdapter;
+    private CategoryAdapter categoryNetworkRequestAdapter;
     private CategoryDAO categoryDAO;
 
     @Inject
-    public CachingCategoryNetworkRequestAdapter(CategoryNetworkRequestAdapter categoryNetworkRequestAdapter, LeafletLocalCacheDatabase leafletLocalCacheDatabase) {
+    public CachingCategoryNetworkRequestAdapter(@Named("categoryNetworkRequestAdapter") CategoryAdapter categoryNetworkRequestAdapter,
+                                                LeafletLocalCacheDatabase leafletLocalCacheDatabase) {
         this.categoryNetworkRequestAdapter = categoryNetworkRequestAdapter;
         this.categoryDAO = leafletLocalCacheDatabase.categoryDAO();
     }

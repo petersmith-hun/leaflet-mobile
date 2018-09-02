@@ -8,10 +8,10 @@ import hu.psprog.leaflet.mobile.model.OrderDirection;
 import hu.psprog.leaflet.mobile.repository.impl.adapter.EntryAdapter;
 import hu.psprog.leaflet.mobile.repository.impl.adapter.impl.offline.room.dao.EntryDAO;
 import hu.psprog.leaflet.mobile.repository.impl.adapter.impl.offline.room.database.LeafletLocalCacheDatabase;
-import hu.psprog.leaflet.mobile.repository.impl.adapter.impl.online.EntryNetworkRequestAdapter;
 import hu.psprog.leaflet.mobile.repository.impl.adapter.impl.online.caching.helper.EntrySummaryPageCacheWriteHelper;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.inject.Singleton;
 import java.util.Optional;
 
@@ -23,12 +23,13 @@ import java.util.Optional;
 @Singleton
 public class CachingEntryNetworkRequestAdapter implements EntryAdapter {
 
-    private EntryNetworkRequestAdapter entryNetworkRequestAdapter;
+    private EntryAdapter entryNetworkRequestAdapter;
     private EntrySummaryPageCacheWriteHelper entrySummaryPageCacheWriteHelper;
     private EntryDAO entryDAO;
 
     @Inject
-    public CachingEntryNetworkRequestAdapter(EntryNetworkRequestAdapter entryNetworkRequestAdapter, EntrySummaryPageCacheWriteHelper entrySummaryPageCacheWriteHelper,
+    public CachingEntryNetworkRequestAdapter(@Named("entryNetworkRequestAdapter") EntryAdapter entryNetworkRequestAdapter,
+                                             EntrySummaryPageCacheWriteHelper entrySummaryPageCacheWriteHelper,
                                              LeafletLocalCacheDatabase leafletLocalCacheDatabase) {
         this.entryNetworkRequestAdapter = entryNetworkRequestAdapter;
         this.entrySummaryPageCacheWriteHelper = entrySummaryPageCacheWriteHelper;
