@@ -15,8 +15,6 @@
     <string name="entrySummaryPageLoadFailure">Failed to load entries</string>
     <string name="entryFailedToLoad">Failed to load entry</string>
 
-    <string name="detailsPageCSSTag">
-        <![CDATA[<link rel=\"stylesheet\" type=\"text/css\" href=\"css/details_page.css\" /><link rel=\"stylesheet\" type=\"text/css\" href=\"css/calmdown.min.css\" />]]></string>
     <string name="exceptionMessageLinkNotSpecified">Link not specified</string>
     <string name="failedToLoadDocument">Failed to load document</string>
 </resources>
