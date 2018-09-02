@@ -9,6 +9,7 @@ import hu.psprog.leaflet.mobile.repository.impl.adapter.impl.offline.room.databa
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -59,6 +60,7 @@ public class EntrySummaryPageCacheReadHelper {
     private List<EntrySummary> getEntrySummaries(int page, long categoryID) {
 
         return entrySummaryPageDAO.getSummaryPageJoins(page, categoryID).stream()
+                .sorted(Comparator.comparing(EntrySummarySummaryPageJoin::getOrder))
                 .map(EntrySummarySummaryPageJoin::getLink)
                 .map(entrySummaryDAO::findEntrySummary)
                 .filter(Objects::nonNull)

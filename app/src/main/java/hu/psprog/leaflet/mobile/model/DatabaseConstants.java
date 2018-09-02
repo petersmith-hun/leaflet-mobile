@@ -28,6 +28,7 @@ class DatabaseConstants {
     static final String FIELD_HAS_NEXT = "has_next";
     static final String FIELD_HAS_PREVIOUS = "has_previous";
     static final String FIELD_CATEGORY_ID = "category_id";
+    static final String FIELD_ORDER = "order_seqn";
 
     private DatabaseConstants() {
         // prevent instantiation

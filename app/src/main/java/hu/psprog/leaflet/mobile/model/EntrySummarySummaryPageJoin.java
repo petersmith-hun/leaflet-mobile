@@ -34,6 +34,9 @@ public class EntrySummarySummaryPageJoin {
     @ForeignKey(entity = EntrySummary.class, parentColumns = DatabaseConstants.FIELD_LINK, childColumns = DatabaseConstants.FIELD_LINK)
     private String link;
 
+    @ColumnInfo(name = DatabaseConstants.FIELD_ORDER)
+    private int order;
+
     public long getCategoryID() {
         return categoryID;
     }
@@ -44,6 +47,10 @@ public class EntrySummarySummaryPageJoin {
 
     public String getLink() {
         return link;
+    }
+
+    public int getOrder() {
+        return order;
     }
 
     public void setCategoryID(long categoryID) {
@@ -58,6 +65,10 @@ public class EntrySummarySummaryPageJoin {
         this.link = link;
     }
 
+    public void setOrder(int order) {
+        this.order = order;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -70,6 +81,7 @@ public class EntrySummarySummaryPageJoin {
                 .append(page, that.page)
                 .append(categoryID, that.categoryID)
                 .append(link, that.link)
+                .append(order, that.order)
                 .isEquals();
     }
 
@@ -79,6 +91,7 @@ public class EntrySummarySummaryPageJoin {
                 .append(categoryID)
                 .append(page)
                 .append(link)
+                .append(order)
                 .toHashCode();
     }
 
@@ -88,6 +101,7 @@ public class EntrySummarySummaryPageJoin {
                 .append("categoryID", categoryID)
                 .append("page", page)
                 .append("link", link)
+                .append("order", order)
                 .toString();
     }
 
@@ -102,6 +116,7 @@ public class EntrySummarySummaryPageJoin {
         private long categoryID;
         private int page;
         private String link;
+        private int order;
 
         private EntrySummarySummaryPageJoinBuilder() {
         }
@@ -121,11 +136,17 @@ public class EntrySummarySummaryPageJoin {
             return this;
         }
 
+        public EntrySummarySummaryPageJoinBuilder withOrder(int order) {
+            this.order = order;
+            return this;
+        }
+
         public EntrySummarySummaryPageJoin build() {
             EntrySummarySummaryPageJoin entrySummarySummaryPageJoin = new EntrySummarySummaryPageJoin();
             entrySummarySummaryPageJoin.categoryID = this.categoryID;
             entrySummarySummaryPageJoin.link = this.link;
             entrySummarySummaryPageJoin.page = this.page;
+            entrySummarySummaryPageJoin.order = this.order;
             return entrySummarySummaryPageJoin;
         }
     }

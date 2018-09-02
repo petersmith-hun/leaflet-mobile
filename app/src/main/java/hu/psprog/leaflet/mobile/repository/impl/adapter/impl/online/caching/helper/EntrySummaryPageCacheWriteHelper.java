@@ -9,6 +9,7 @@ import hu.psprog.leaflet.mobile.repository.impl.adapter.impl.offline.room.databa
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Helper class for storing a response in the local cache.
@@ -52,17 +53,19 @@ public class EntrySummaryPageCacheWriteHelper {
     }
 
     private void joinSummaryPagesAndSummaries(EntrySummaryPage entrySummaryPage) {
+        AtomicInteger index = new AtomicInteger(0);
         entrySummaryPage.getEntrySummaryList().forEach(entrySummary -> {
-            EntrySummarySummaryPageJoin join = buildEntrySummarySummaryPageJoin(entrySummaryPage, entrySummary);
+            EntrySummarySummaryPageJoin join = buildEntrySummarySummaryPageJoin(entrySummaryPage, entrySummary, index.getAndIncrement());
             entrySummaryPageDAO.insert(join);
         });
     }
 
-    private EntrySummarySummaryPageJoin buildEntrySummarySummaryPageJoin(EntrySummaryPage entrySummaryPage, EntrySummary entrySummary) {
+    private EntrySummarySummaryPageJoin buildEntrySummarySummaryPageJoin(EntrySummaryPage entrySummaryPage, EntrySummary entrySummary, int order) {
         return EntrySummarySummaryPageJoin.getBuilder()
                 .withCategoryID(entrySummaryPage.getCategoryID())
                 .withPage(entrySummaryPage.getPage())
                 .withLink(entrySummary.getLink())
+                .withOrder(order)
                 .build();
     }
 }
