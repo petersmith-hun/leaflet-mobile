@@ -18,6 +18,7 @@ project.ext {
     logbackAndroidVersion = "1.1.1-12"
     markwonVersion = "1.1.0"
     prism4jVersion = "1.1.0"
+    roomVersion = "1.1.1"
 }
 
 android {
@@ -59,6 +60,7 @@ dependencies {
     implementation "com.android.support.constraint:constraint-layout:$androidConstraintLayoutVersion"
     implementation "android.arch.lifecycle:extensions:$archVersion"
     implementation "android.arch.lifecycle:viewmodel:$archVersion"
+    implementation "android.arch.persistence.room:runtime:$roomVersion"
 
     // external dependencies
     implementation "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion"
@@ -84,6 +86,8 @@ dependencies {
         exclude module: 'rcp-request-adapters'
     }
 
+    // annotation processors
+    annotationProcessor "android.arch.persistence.room:compiler:$roomVersion"
     annotationProcessor "com.jakewharton:butterknife-compiler:$butterknifeVersion"
     annotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
     annotationProcessor "com.google.dagger:dagger-android-processor:$daggerVersion"

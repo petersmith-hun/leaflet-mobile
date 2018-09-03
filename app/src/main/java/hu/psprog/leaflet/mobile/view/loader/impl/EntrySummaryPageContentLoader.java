@@ -85,8 +85,17 @@ public class EntrySummaryPageContentLoader extends AbstractPageableContentLoader
     }
 
     private void updateAdapter(List<EntrySummary> entrySummaryList) {
-        int currentItemCount = entryListRecyclerViewAdapter.getItemCount();
-        entryListRecyclerViewAdapter.appendEntryList(entrySummaryList);
+        int currentItemCount = 0;
+        if (isFirstPage()) {
+            entryListRecyclerViewAdapter.setEntryList(entrySummaryList);
+        } else {
+            currentItemCount = entryListRecyclerViewAdapter.getItemCount();
+            entryListRecyclerViewAdapter.appendEntryList(entrySummaryList);
+        }
         entryListRecyclerViewAdapter.notifyItemRangeInserted(currentItemCount, entrySummaryList.size());
+    }
+
+    private boolean isFirstPage() {
+        return getCurrentPage() == 1;
     }
 }

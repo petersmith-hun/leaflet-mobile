@@ -29,7 +29,7 @@ import static hu.psprog.leaflet.mobile.view.helper.NavigationMenuUpdater.INTENT_
 @Singleton
 public class FragmentFactory {
 
-    private static final int SPARSE_ARRAY_INITIAL_CAPACITY = 1;
+    private static final int SPARSE_ARRAY_INITIAL_CAPACITY = 2;
     private static final SparseArray<Supplier<Fragment>> FRAGMENTS_BY_MENU_ITEM_ID = new SparseArray<>(SPARSE_ARRAY_INITIAL_CAPACITY);
     private static final Map<String, Supplier<Fragment>> FRAGMENTS_BY_INTENT_ACTION = new HashMap<>();
 

@@ -10,16 +10,19 @@ import hu.psprog.leaflet.mobile.model.EntrySummary;
 import hu.psprog.leaflet.mobile.view.fragment.EntryListFragment.OnEntryItemSelectedListener;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import java.util.LinkedList;
 import java.util.List;
 
 public class EntryListRecyclerViewAdapter extends RecyclerView.Adapter<EntryListRecyclerViewAdapter.ViewHolder> {
 
-    private List<EntrySummary> entryList = new LinkedList<>();
+    private List<EntrySummary> entryList;
     private OnEntryItemSelectedListener entryItemSelectedListener;
 
     public void setEntryItemSelectedListener(OnEntryItemSelectedListener entryItemSelectedListener) {
         this.entryItemSelectedListener = entryItemSelectedListener;
+    }
+
+    public void setEntryList(List<EntrySummary> entryList) {
+        this.entryList = entryList;
     }
 
     public void appendEntryList(List<EntrySummary> entryList) {

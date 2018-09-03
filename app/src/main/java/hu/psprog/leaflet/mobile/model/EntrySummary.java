@@ -1,5 +1,9 @@
 package hu.psprog.leaflet.mobile.model;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -9,10 +13,18 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  *
  * @author Peter Smith
  */
+@Entity(tableName = DatabaseConstants.TABLE_ENTRY_SUMMARIES)
 public class EntrySummary {
 
+    @NonNull
+    @PrimaryKey
+    @ColumnInfo(name = DatabaseConstants.FIELD_LINK)
     private String link;
+
+    @ColumnInfo(name = DatabaseConstants.FIELD_TITLE)
     private String title;
+
+    @ColumnInfo(name = DatabaseConstants.FIELD_PROLOGUE)
     private String prologue;
 
     public String getLink() {
@@ -25,6 +37,18 @@ public class EntrySummary {
 
     public String getPrologue() {
         return prologue;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setPrologue(String prologue) {
+        this.prologue = prologue;
     }
 
     @Override

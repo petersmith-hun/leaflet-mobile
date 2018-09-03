@@ -1,5 +1,9 @@
 package hu.psprog.leaflet.mobile.model;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -11,10 +15,18 @@ import java.io.Serializable;
  *
  * @author Peter Smith
  */
+@Entity(tableName = DatabaseConstants.TABLE_DOCUMENT_DETAILS)
 public class DocumentDetails implements Serializable {
 
+    @NonNull
+    @PrimaryKey
+    @ColumnInfo(name = DatabaseConstants.FIELD_LINK)
     private String link;
+
+    @ColumnInfo(name = DatabaseConstants.FIELD_TITLE)
     private String title;
+
+    @ColumnInfo(name = DatabaseConstants.FIELD_CONTENT)
     private String content;
 
     public String getLink() {
@@ -27,6 +39,18 @@ public class DocumentDetails implements Serializable {
 
     public String getContent() {
         return content;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     @Override
