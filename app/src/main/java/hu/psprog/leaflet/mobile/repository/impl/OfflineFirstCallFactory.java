@@ -13,7 +13,7 @@ import java.util.function.Supplier;
 /**
  * Factory to create a proper offline-first call chain.
  * Offline-first call means, that a supplier is called for a response, which we assume is originated from an offline source (local cache).
- * It that call cannot give a proper result, then we try an other source, assuming it's an online, up-to-date source (network call).
+ * If that call cannot give a proper result, then we try an other source, assuming it's an online, up-to-date source (network call).
  *
  * @author Peter Smith
  */
@@ -34,7 +34,7 @@ public class OfflineFirstCallFactory {
      *  1) Offline-call supplier gets called.
      *  2) Default fallback predicate is evaluated on the result of the offline call supplier.
      *     The default fallback predicate is only checking, if the result object is null or not.
-     *  2/a) In case the result object is not null, it is returned.
+     *  2/a) In case of the result object not being null, it is returned.
      *  2/b) Otherwise the online-call supplier gets called, and regardless its response, it is returned.
      *
      * @param offlineCall offline-call supplier, a response supplier, that is assumed to be originated from a local (cache) source
@@ -52,7 +52,7 @@ public class OfflineFirstCallFactory {
      * Steps done by the created call chain:
      *  1) Offline-call supplier gets called.
      *  2) Specified fallback predicate is evaluated on the result of the offline call supplier.
-     *  2/a) In case the result object is not null, it is returned.
+     *  2/a) In case of the predicate being true, it is returned.
      *  2/b) Otherwise the online-call supplier gets called, and regardless its response, it is returned.
      *
      * @param offlineCall offline-call supplier, a response supplier, that is assumed to be originated from a local (cache) source
