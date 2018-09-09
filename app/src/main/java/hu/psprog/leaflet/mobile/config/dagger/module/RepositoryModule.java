@@ -5,9 +5,11 @@ import dagger.Module;
 import hu.psprog.leaflet.mobile.repository.CategoryRepository;
 import hu.psprog.leaflet.mobile.repository.DocumentRepository;
 import hu.psprog.leaflet.mobile.repository.EntryRepository;
+import hu.psprog.leaflet.mobile.repository.SupportRepository;
 import hu.psprog.leaflet.mobile.repository.impl.CategoryRepositoryImpl;
 import hu.psprog.leaflet.mobile.repository.impl.DocumentRepositoryImpl;
 import hu.psprog.leaflet.mobile.repository.impl.EntryRepositoryImpl;
+import hu.psprog.leaflet.mobile.repository.impl.SupportRepositoryImpl;
 import hu.psprog.leaflet.mobile.repository.impl.adapter.CategoryAdapter;
 import hu.psprog.leaflet.mobile.repository.impl.adapter.DocumentAdapter;
 import hu.psprog.leaflet.mobile.repository.impl.adapter.EntryAdapter;
@@ -32,13 +34,16 @@ import javax.inject.Named;
 public abstract class RepositoryModule {
 
     @Binds
-    public abstract CategoryRepository bindCategoryRepository(CategoryRepositoryImpl dummyCategoryRepository);
+    public abstract CategoryRepository bindCategoryRepository(CategoryRepositoryImpl categoryRepository);
 
     @Binds
-    public abstract DocumentRepository bindDocumentRepository(DocumentRepositoryImpl dummyDocumentRepository);
+    public abstract DocumentRepository bindDocumentRepository(DocumentRepositoryImpl documentRepository);
 
     @Binds
-    public abstract EntryRepository bindEntryRepository(EntryRepositoryImpl dummyEntryRepository);
+    public abstract EntryRepository bindEntryRepository(EntryRepositoryImpl entryRepository);
+
+    @Binds
+    public abstract SupportRepository bindSupportRepository(SupportRepositoryImpl supportRepository);
 
     @Binds
     @Named("entryLocalCacheAdapter")

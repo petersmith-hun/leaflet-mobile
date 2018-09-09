@@ -17,4 +17,5 @@
 
     <string name="exceptionMessageLinkNotSpecified">Link not specified</string>
     <string name="failedToLoadDocument">Failed to load document</string>
+    <string name="failedToRefreshMessage">Failed to refresh</string>
 </resources>

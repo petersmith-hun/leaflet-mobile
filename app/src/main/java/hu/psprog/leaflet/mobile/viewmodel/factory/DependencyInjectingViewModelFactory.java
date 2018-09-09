@@ -7,13 +7,16 @@ import hu.psprog.leaflet.mobile.repository.CategoryRepository;
 import hu.psprog.leaflet.mobile.repository.DocumentRepository;
 import hu.psprog.leaflet.mobile.repository.EntryRepository;
 import hu.psprog.leaflet.mobile.repository.Repository;
+import hu.psprog.leaflet.mobile.repository.SupportRepository;
 import hu.psprog.leaflet.mobile.repository.impl.CategoryRepositoryImpl;
 import hu.psprog.leaflet.mobile.repository.impl.DocumentRepositoryImpl;
 import hu.psprog.leaflet.mobile.repository.impl.EntryRepositoryImpl;
+import hu.psprog.leaflet.mobile.repository.impl.SupportRepositoryImpl;
 import hu.psprog.leaflet.mobile.viewmodel.CategoryListViewModel;
 import hu.psprog.leaflet.mobile.viewmodel.DocumentDetailsViewModel;
 import hu.psprog.leaflet.mobile.viewmodel.EntryDetailsViewModel;
 import hu.psprog.leaflet.mobile.viewmodel.EntryListViewModel;
+import hu.psprog.leaflet.mobile.viewmodel.LocalCacheSupportViewModel;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -39,11 +42,13 @@ public class DependencyInjectingViewModelFactory implements ViewModelProvider.Fa
         VIEW_MODEL_TO_REPOSITORY_MAPPING.put(DocumentDetailsViewModel.class, DocumentRepositoryImpl.class);
         VIEW_MODEL_TO_REPOSITORY_MAPPING.put(EntryDetailsViewModel.class, EntryRepositoryImpl.class);
         VIEW_MODEL_TO_REPOSITORY_MAPPING.put(EntryListViewModel.class, EntryRepositoryImpl.class);
+        VIEW_MODEL_TO_REPOSITORY_MAPPING.put(LocalCacheSupportViewModel.class, SupportRepositoryImpl.class);
 
         VIEW_MODEL_CREATOR_MAPPING.put(CategoryListViewModel.class, repository -> new CategoryListViewModel((CategoryRepository) repository));
         VIEW_MODEL_CREATOR_MAPPING.put(DocumentDetailsViewModel.class, repository -> new DocumentDetailsViewModel((DocumentRepository) repository));
         VIEW_MODEL_CREATOR_MAPPING.put(EntryDetailsViewModel.class, repository -> new EntryDetailsViewModel((EntryRepository) repository));
         VIEW_MODEL_CREATOR_MAPPING.put(EntryListViewModel.class, repository -> new EntryListViewModel((EntryRepository) repository));
+        VIEW_MODEL_CREATOR_MAPPING.put(LocalCacheSupportViewModel.class, repository -> new LocalCacheSupportViewModel((SupportRepository) repository));
     }
 
     private Map<Class<? extends Repository>, Repository> repositoryMap;
@@ -66,4 +71,5 @@ public class DependencyInjectingViewModelFactory implements ViewModelProvider.Fa
 
         return (T) VIEW_MODEL_CREATOR_MAPPING.get(modelClass).apply(repository);
     }
+
 }
