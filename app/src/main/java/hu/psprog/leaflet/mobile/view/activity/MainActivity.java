@@ -17,6 +17,7 @@ import butterknife.ButterKnife;
 import dagger.android.AndroidInjection;
 import hu.psprog.leaflet.mobile.R;
 import hu.psprog.leaflet.mobile.model.EntrySummary;
+import hu.psprog.leaflet.mobile.service.LocalCacheUpdaterService;
 import hu.psprog.leaflet.mobile.view.fragment.EntryDetailsFragment;
 import hu.psprog.leaflet.mobile.view.fragment.EntryListFragment;
 import hu.psprog.leaflet.mobile.view.helper.FragmentFactory;
@@ -48,6 +49,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Inject
     DependencyInjectingViewModelFactory viewModelFactory;
 
+    @Inject
+    LocalCacheUpdaterService localCacheUpdaterService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +59,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ButterKnife.bind(this);
         AndroidInjection.inject(this);
         setSupportActionBar(toolbar);
+
+        localCacheUpdaterService.update(false);
 
         ActionBarDrawerToggle toggle = getToggle();
         drawer.addDrawerListener(toggle);
@@ -121,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void setRefreshListener() {
         refreshLayout.setOnRefreshListener(() -> {
             Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-            new RefreshingContentLoader(currentFragment, getWindow().getDecorView(), viewModelFactory, refreshFragmentConsumer()).loadContent();
+            new RefreshingContentLoader(currentFragment, getWindow().getDecorView(), localCacheUpdaterService, refreshFragmentConsumer()).loadContent();
             new NavigationMenuUpdater(this, viewModelFactory).updateMenu();
         });
     }

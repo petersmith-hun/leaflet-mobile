@@ -7,7 +7,8 @@ package hu.psprog.leaflet.mobile.preferences.accessor;
  */
 public enum ApplicationPreference {
 
-    DEVICE_ID("device_id");
+    DEVICE_ID("device_id"),
+    LAST_UPDATE("last_update");
 
     private String preferenceKey;
 
