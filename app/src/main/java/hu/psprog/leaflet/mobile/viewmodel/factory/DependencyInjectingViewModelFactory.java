@@ -66,4 +66,5 @@ public class DependencyInjectingViewModelFactory implements ViewModelProvider.Fa
 
         return (T) VIEW_MODEL_CREATOR_MAPPING.get(modelClass).apply(repository);
     }
+
 }

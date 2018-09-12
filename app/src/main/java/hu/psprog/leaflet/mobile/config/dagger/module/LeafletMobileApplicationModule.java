@@ -1,7 +1,10 @@
 package hu.psprog.leaflet.mobile.config.dagger.module;
 
+import dagger.Binds;
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
+import hu.psprog.leaflet.mobile.service.LocalCacheUpdaterService;
+import hu.psprog.leaflet.mobile.service.impl.LocalCacheUpdaterServiceImpl;
 import hu.psprog.leaflet.mobile.view.activity.MainActivity;
 import hu.psprog.leaflet.mobile.view.fragment.DocumentDetailsFragment;
 import hu.psprog.leaflet.mobile.view.fragment.EntryDetailsFragment;
@@ -26,4 +29,7 @@ public abstract class LeafletMobileApplicationModule {
 
     @ContributesAndroidInjector
     abstract EntryListFragment entryListFragment();
+
+    @Binds
+    public abstract LocalCacheUpdaterService bindLocalCacheUpdaterService(LocalCacheUpdaterServiceImpl localCacheUpdaterService);
 }

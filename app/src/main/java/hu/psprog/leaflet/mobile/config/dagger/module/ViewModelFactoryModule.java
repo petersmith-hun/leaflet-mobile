@@ -6,6 +6,7 @@ import hu.psprog.leaflet.mobile.repository.CategoryRepository;
 import hu.psprog.leaflet.mobile.repository.DocumentRepository;
 import hu.psprog.leaflet.mobile.repository.EntryRepository;
 import hu.psprog.leaflet.mobile.repository.Repository;
+import hu.psprog.leaflet.mobile.repository.SupportRepository;
 import hu.psprog.leaflet.mobile.viewmodel.factory.DependencyInjectingViewModelFactory;
 
 import javax.inject.Named;
@@ -26,8 +27,9 @@ public class ViewModelFactoryModule {
     @Provides
     @Singleton
     @Named(REPOSITORIES)
-    public List<Repository> provideRepositories(CategoryRepository categoryRepository, DocumentRepository documentRepository, EntryRepository entryRepository) {
-        return Arrays.asList(categoryRepository, documentRepository, entryRepository);
+    public List<Repository> provideRepositories(CategoryRepository categoryRepository, DocumentRepository documentRepository,
+                                                EntryRepository entryRepository, SupportRepository supportRepository) {
+        return Arrays.asList(categoryRepository, documentRepository, entryRepository, supportRepository);
     }
 
     @Provides

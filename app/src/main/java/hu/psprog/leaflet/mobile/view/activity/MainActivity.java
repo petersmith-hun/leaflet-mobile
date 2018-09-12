@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -16,14 +17,17 @@ import butterknife.ButterKnife;
 import dagger.android.AndroidInjection;
 import hu.psprog.leaflet.mobile.R;
 import hu.psprog.leaflet.mobile.model.EntrySummary;
+import hu.psprog.leaflet.mobile.service.LocalCacheUpdaterService;
 import hu.psprog.leaflet.mobile.view.fragment.EntryDetailsFragment;
 import hu.psprog.leaflet.mobile.view.fragment.EntryListFragment;
 import hu.psprog.leaflet.mobile.view.helper.FragmentFactory;
 import hu.psprog.leaflet.mobile.view.helper.NavigationMenuUpdater;
+import hu.psprog.leaflet.mobile.view.loader.impl.RefreshingContentLoader;
 import hu.psprog.leaflet.mobile.viewmodel.factory.DependencyInjectingViewModelFactory;
 
 import javax.inject.Inject;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, EntryListFragment.OnEntryItemSelectedListener {
 
@@ -36,11 +40,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @BindView(R.id.nav_view)
     NavigationView navigationView;
 
+    @BindView(R.id.refresh)
+    SwipeRefreshLayout refreshLayout;
+
     @Inject
     FragmentFactory fragmentFactory;
 
     @Inject
     DependencyInjectingViewModelFactory viewModelFactory;
+
+    @Inject
+    LocalCacheUpdaterService localCacheUpdaterService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,15 +60,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         AndroidInjection.inject(this);
         setSupportActionBar(toolbar);
 
+        localCacheUpdaterService.update(false);
+
         ActionBarDrawerToggle toggle = getToggle();
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        setRefreshListener();
         navigationView.setNavigationItemSelectedListener(this);
         new NavigationMenuUpdater(this, viewModelFactory).updateMenu();
-        if (Objects.isNull(getSupportFragmentManager().findFragmentById(R.id.fragment_container))) {
-            changeFragment(new EntryListFragment(), false);
-        }
+        loadDefaultFragment();
     }
 
     @Override
@@ -107,6 +118,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
     }
 
+    private void loadDefaultFragment() {
+        if (Objects.isNull(getSupportFragmentManager().findFragmentById(R.id.fragment_container))) {
+            changeFragment(new EntryListFragment(), false);
+        }
+    }
+
+    private void setRefreshListener() {
+        refreshLayout.setOnRefreshListener(() -> {
+            Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+            new RefreshingContentLoader(currentFragment, getWindow().getDecorView(), localCacheUpdaterService, refreshFragmentConsumer()).loadContent();
+            new NavigationMenuUpdater(this, viewModelFactory).updateMenu();
+        });
+    }
+
     private void changeFragment(Fragment targetFragment) {
         changeFragment(targetFragment, true);
     }
@@ -122,5 +147,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         fragmentTransaction.commit();
+    }
+
+    private Consumer<Fragment> refreshFragmentConsumer() {
+        return fragment -> getSupportFragmentManager()
+                .beginTransaction()
+                .detach(fragment)
+                .attach(fragment)
+                .commit();
     }
 }
