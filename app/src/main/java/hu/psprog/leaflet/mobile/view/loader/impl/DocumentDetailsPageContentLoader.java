@@ -3,9 +3,9 @@ package hu.psprog.leaflet.mobile.view.loader.impl;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.BindString;
@@ -41,7 +41,7 @@ public class DocumentDetailsPageContentLoader extends AbstractDefaultContentLoad
     TextView contentTextView;
 
     @BindView(R.id.documentDetailsScrollView)
-    ScrollView scrollView;
+    NestedScrollView scrollView;
 
     @BindView(R.id.documentDetailsProgressBar)
     ProgressBar progressBar;
