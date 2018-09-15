@@ -41,10 +41,17 @@ public class NavigationMenuUpdater {
      * Executes menu update.
      */
     public void updateMenu() {
+        resetMenu();
         Disposable subscriptionResult = categoryListViewModel.getCategoriesForMenu()
                 .subscribe(categoryList -> categoryList.getCategories().forEach(this::createMenuItem));
         getCategoriesMenuSection().setVisible(true);
         disposables.add(subscriptionResult);
+    }
+
+    private void resetMenu() {
+        getCategoriesMenuSection()
+                .getSubMenu()
+                .clear();
     }
 
     private void createMenuItem(Category category) {

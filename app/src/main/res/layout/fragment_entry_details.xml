@@ -13,7 +13,7 @@
             android:layout_centerVertical="true"
             android:id="@+id/entryDetailsProgressBar"
             android:visibility="gone" />
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
             android:id="@+id/entryDetailsScrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -57,6 +57,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
         </LinearLayout>
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 
 </RelativeLayout>
