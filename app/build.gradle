@@ -12,13 +12,14 @@ project.ext {
     daggerVersion = "2.16"
     commonsLangVersion = "3.7"
     archVersion = "1.1.1"
-    leafletBridgeVersion = "3.0.0"
-    leafletRCPVersion = "1.2.1"
+    leafletAPIVersion = "1.6.6"
     slf4jVersion = "1.7.25"
     logbackAndroidVersion = "1.1.1-12"
     markwonVersion = "1.1.0"
     prism4jVersion = "1.1.0"
     roomVersion = "1.1.1"
+    retrofitVersion = "2.6.0"
+    jacksonVersion = "2.9.8"
 }
 
 android {
@@ -77,14 +78,10 @@ dependencies {
     implementation "ru.noties:markwon-syntax:$markwonVersion"
     implementation "ru.noties:markwon-view:$markwonVersion"
     implementation "ru.noties:prism4j:$prism4jVersion"
-    implementation ("hu.psprog.leaflet:bridge-implementation:$leafletBridgeVersion") {
-        exclude module: 'javax.inject'
-    }
-    implementation ("hu.psprog.leaflet:backend-rest-client:$leafletRCPVersion") {
-        exclude module: 'javax.inject'
-        exclude module: 'aopalliance-repackaged'
-        exclude module: 'rcp-request-adapters'
-    }
+    implementation "hu.psprog.leaflet:leaflet-rest-api:$leafletAPIVersion:jdk8"
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-jackson:$retrofitVersion"
+    implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonVersion"
 
     // annotation processors
     annotationProcessor "android.arch.persistence.room:compiler:$roomVersion"

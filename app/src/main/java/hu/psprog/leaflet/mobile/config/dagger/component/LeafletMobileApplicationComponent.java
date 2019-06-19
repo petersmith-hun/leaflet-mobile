@@ -4,10 +4,9 @@ import dagger.Component;
 import dagger.android.AndroidInjector;
 import hu.psprog.leaflet.mobile.LeafletMobileApplication;
 import hu.psprog.leaflet.mobile.config.dagger.module.ApplicationModule;
-import hu.psprog.leaflet.mobile.config.dagger.module.BridgeClientConfigurationModule;
-import hu.psprog.leaflet.mobile.config.dagger.module.BridgeServiceConfigurationModule;
 import hu.psprog.leaflet.mobile.config.dagger.module.LeafletMobileApplicationModule;
 import hu.psprog.leaflet.mobile.config.dagger.module.RepositoryModule;
+import hu.psprog.leaflet.mobile.config.dagger.module.RetrofitRESTClientConfigurationModule;
 import hu.psprog.leaflet.mobile.config.dagger.module.SpannableConfigurationModule;
 import hu.psprog.leaflet.mobile.config.dagger.module.ViewModelFactoryModule;
 
@@ -21,8 +20,7 @@ import javax.inject.Singleton;
 @Singleton
 @Component(modules = {
         ApplicationModule.class,
-        BridgeClientConfigurationModule.class,
-        BridgeServiceConfigurationModule.class,
+        RetrofitRESTClientConfigurationModule.class,
         LeafletMobileApplicationModule.class,
         RepositoryModule.class,
         SpannableConfigurationModule.class,

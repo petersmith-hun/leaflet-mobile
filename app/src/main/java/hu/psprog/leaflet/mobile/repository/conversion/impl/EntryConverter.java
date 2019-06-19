@@ -29,7 +29,7 @@ public class EntryConverter implements Converter<WrapperBodyDataModel<ExtendedEn
                 .withAuthor(extendedEntryDataModel.getUser().getUsername())
                 .withTitle(extendedEntryDataModel.getTitle())
                 .withContent(extendedEntryDataModel.getRawContent())
-                .withCreatedDate(extendedEntryDataModel.getCreated())
+                .withCreatedDate(extendedEntryDataModel.getCreated().toString())
                 .build();
     }
 }
