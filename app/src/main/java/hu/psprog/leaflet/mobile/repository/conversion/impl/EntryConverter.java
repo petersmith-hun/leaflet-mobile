@@ -7,6 +7,10 @@ import hu.psprog.leaflet.mobile.repository.conversion.Converter;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 /**
  * Converts {@link ExtendedEntryDataModel} wrapped in {@link WrapperBodyDataModel} to {@link EntryDetails}.
@@ -15,6 +19,8 @@ import javax.inject.Singleton;
  */
 @Singleton
 public class EntryConverter implements Converter<WrapperBodyDataModel<ExtendedEntryDataModel>, EntryDetails> {
+
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy. LLLL dd., EEEE");
 
     @Inject
     public EntryConverter() {
@@ -29,7 +35,20 @@ public class EntryConverter implements Converter<WrapperBodyDataModel<ExtendedEn
                 .withAuthor(extendedEntryDataModel.getUser().getUsername())
                 .withTitle(extendedEntryDataModel.getTitle())
                 .withContent(extendedEntryDataModel.getRawContent())
-                .withCreatedDate(extendedEntryDataModel.getCreated())
+                .withCreatedDate(formatCreationDate(extendedEntryDataModel))
                 .build();
+    }
+
+    private String formatCreationDate(ExtendedEntryDataModel entryDataModel) {
+
+        return extractCreationDate(entryDataModel)
+                .withZoneSameInstant(ZoneId.systemDefault())
+                .format(DATE_TIME_FORMATTER);
+    }
+
+    private ZonedDateTime extractCreationDate(ExtendedEntryDataModel entryDataModel) {
+
+        return Optional.ofNullable(entryDataModel.getPublished())
+                .orElse(entryDataModel.getCreated());
     }
 }
