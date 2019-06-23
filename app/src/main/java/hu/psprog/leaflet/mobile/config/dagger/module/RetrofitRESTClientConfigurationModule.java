@@ -17,7 +17,7 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 import javax.inject.Singleton;
 
 /**
- * Dagger module to configure Bridge services.
+ * Dagger module to configure Retrofit clients.
  *
  * @author Peter Smith
  */

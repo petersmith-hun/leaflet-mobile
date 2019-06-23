@@ -8,7 +8,7 @@ import java.util.function.Supplier;
 
 /**
  * Abstract base implementation for online adapter implementations,
- * that calls Leaflet backend application via any REST client implementation to retrieve data.
+ * that calls Leaflet backend application via Retrofit REST client implementations to retrieve data.
  *
  * @author Peter Smith
  */
